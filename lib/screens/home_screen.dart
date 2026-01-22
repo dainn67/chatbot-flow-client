@@ -30,14 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
         scrolledUnderElevation: 0,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1), Color(0xFFFFE8CC)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            border: Border(
-              bottom: BorderSide(color: Color(0xFFFFC107), width: 3),
-            ),
+            gradient: LinearGradient(colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1), Color(0xFFFFE8CC)], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            border: Border(bottom: BorderSide(color: Color(0xFFFFC107), width: 3)),
           ),
         ),
         title: Row(
@@ -46,24 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFD32F2F), Color(0xFFC62828), Color(0xFFB71C1C)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                gradient: const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828), Color(0xFFB71C1C)], begin: Alignment.topLeft, end: Alignment.bottomRight),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: const Color(0xFFFFC107), width: 2.5),
                 boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFFD32F2F).withValues(alpha: 0.4),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                  BoxShadow(
-                    color: const Color(0xFFFFC107).withValues(alpha: 0.3),
-                    blurRadius: 20,
-                    offset: const Offset(0, 6),
-                  ),
+                  BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.4), blurRadius: 12, offset: const Offset(0, 4)),
+                  BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.3), blurRadius: 20, offset: const Offset(0, 6)),
                 ],
               ),
               child: const Icon(Icons.chat_bubble_rounded, color: Colors.white, size: 20),
@@ -80,21 +62,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: 20,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 0.5,
-                    shadows: [
-                      Shadow(
-                        color: Color(0xFFFFC107),
-                        blurRadius: 8,
-                      ),
-                    ],
+                    shadows: [Shadow(color: Color(0xFFFFC107), blurRadius: 8)],
                   ),
                 ),
+                const SizedBox(height: 4),
                 Text(
                   'Xuân Ất Tỵ 2026 🧧',
-                  style: TextStyle(
-                    color: Color(0xFFD32F2F),
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(color: Color(0xFFD32F2F), fontSize: 12, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -104,17 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             margin: const EdgeInsets.only(right: 8),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFC107), Color(0xFFFFB300)],
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFFFFC107), Color(0xFFFFB300)]),
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFFFC107).withValues(alpha: 0.4),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+              boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.4), blurRadius: 8, offset: const Offset(0, 2))],
             ),
             child: IconButton(
               icon: const Icon(Icons.refresh_rounded, color: Colors.white),
@@ -132,11 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               width: 3,
               decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0xFFD32F2F), Color(0xFFFFC107), Color(0xFFD32F2F)],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
+                gradient: LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFFFC107), Color(0xFFD32F2F)], begin: Alignment.topCenter, end: Alignment.bottomCenter),
               ),
             ),
             Expanded(child: ChatArea(messagesProvider: messagesProvider)),
@@ -158,11 +120,7 @@ class ConversationSidebar extends StatelessWidget {
     return Container(
       width: 280,
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFFFFFDE7), Color(0xFFFFF8E1), Color(0xFFFFECB3)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        gradient: LinearGradient(colors: [Color(0xFFFFFDE7), Color(0xFFFFF8E1), Color(0xFFFFECB3)], begin: Alignment.topCenter, end: Alignment.bottomCenter),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,37 +129,20 @@ class ConversationSidebar extends StatelessWidget {
           Container(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1)],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-              border: const Border(
-                bottom: BorderSide(color: Color(0xFFFFC107), width: 2),
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1)], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+              border: const Border(bottom: BorderSide(color: Color(0xFFFFC107), width: 2)),
             ),
             child: Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFD32F2F), Color(0xFFC62828)],
-                    ),
+                    gradient: const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]),
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: const Color(0xFFFFC107), width: 2),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFFD32F2F).withValues(alpha: 0.3),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+                    boxShadow: [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))],
                   ),
-                  child: const Text(
-                    '🏮',
-                    style: TextStyle(fontSize: 20),
-                  ),
+                  child: const Text('🏮', style: TextStyle(fontSize: 20)),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -214,21 +155,12 @@ class ConversationSidebar extends StatelessWidget {
                           fontSize: 16,
                           fontWeight: FontWeight.w800,
                           color: const Color(0xFFB71C1C),
-                          shadows: [
-                            Shadow(
-                              color: const Color(0xFFFFC107).withValues(alpha: 0.3),
-                              blurRadius: 4,
-                            ),
-                          ],
+                          shadows: [Shadow(color: const Color(0xFFFFC107).withValues(alpha: 0.3), blurRadius: 4)],
                         ),
                       ),
                       Text(
                         'Chúc mừng năm mới',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFFD32F2F),
-                        ),
+                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Color(0xFFD32F2F)),
                       ),
                     ],
                   ),
@@ -261,12 +193,7 @@ class ConversationSidebar extends StatelessWidget {
                       final flowTitle = conversation.flowTitle;
                       final isSelected = messagesProvider.selectedConversationId == conversationId;
 
-                      return ConversationItem(
-                        appName: appName,
-                        flowTitle: flowTitle,
-                        isSelected: isSelected,
-                        onTap: () => messagesProvider.selectConversation(conversationId),
-                      );
+                      return ConversationItem(appName: appName, flowTitle: flowTitle, isSelected: isSelected, onTap: () => messagesProvider.selectConversation(conversationId));
                     },
                   ),
           ),
@@ -287,33 +214,17 @@ class ConversationSidebar extends StatelessWidget {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFE082), Color(0xFFFFD54F)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFFFFE082), Color(0xFFFFD54F)], begin: Alignment.topLeft, end: Alignment.bottomRight),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: const Color(0xFFD32F2F), width: 2),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFFFC107).withValues(alpha: 0.4),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+              boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.4), blurRadius: 12, offset: const Offset(0, 4))],
             ),
-            child: const Center(
-              child: Text('🧧', style: TextStyle(fontSize: 40)),
-            ),
+            child: const Center(child: Text('🧧', style: TextStyle(fontSize: 40))),
           ),
           const SizedBox(height: 16),
           Text(
             'Chưa có cuộc trò chuyện',
-            style: TextStyle(
-              fontSize: 14,
-              color: const Color(0xFFD32F2F),
-              fontWeight: FontWeight.w700,
-            ),
+            style: TextStyle(fontSize: 14, color: const Color(0xFFD32F2F), fontWeight: FontWeight.w700),
           ),
         ],
       ),
@@ -324,14 +235,8 @@ class ConversationSidebar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-        border: const Border(
-          top: BorderSide(color: Color(0xFFFFC107), width: 2),
-        ),
+        gradient: const LinearGradient(colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1)], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+        border: const Border(top: BorderSide(color: Color(0xFFFFC107), width: 2)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -339,24 +244,11 @@ class ConversationSidebar extends StatelessWidget {
           // Previous button
           Container(
             decoration: BoxDecoration(
-              gradient: provider.currentPage > 1
-                  ? const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)])
-                  : null,
+              gradient: provider.currentPage > 1 ? const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]) : null,
               color: provider.currentPage > 1 ? null : const Color(0xFFFFE082),
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: provider.currentPage > 1 ? const Color(0xFFFFC107) : const Color(0xFFFFD54F),
-                width: 2,
-              ),
-              boxShadow: provider.currentPage > 1
-                  ? [
-                      BoxShadow(
-                        color: const Color(0xFFD32F2F).withValues(alpha: 0.3),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ]
-                  : null,
+              border: Border.all(color: provider.currentPage > 1 ? const Color(0xFFFFC107) : const Color(0xFFFFD54F), width: 2),
+              boxShadow: provider.currentPage > 1 ? [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))] : null,
             ),
             child: IconButton(
               icon: const Icon(Icons.chevron_left_rounded, size: 20),
@@ -372,31 +264,18 @@ class ConversationSidebar extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFC107), Color(0xFFFFB300)],
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFFFFC107), Color(0xFFFFB300)]),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: const Color(0xFFD32F2F), width: 2),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFFFC107).withValues(alpha: 0.4),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+              boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.4), blurRadius: 8, offset: const Offset(0, 2))],
             ),
             child: Text(
-              'Trang ${provider.currentPage}',
+              'Page ${provider.currentPage}',
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w800,
                 color: Colors.white,
-                shadows: [
-                  Shadow(
-                    color: Color(0xFFD32F2F),
-                    blurRadius: 4,
-                  ),
-                ],
+                shadows: [Shadow(color: Color(0xFFD32F2F), blurRadius: 4)],
               ),
             ),
           ),
@@ -408,13 +287,7 @@ class ConversationSidebar extends StatelessWidget {
               gradient: const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: const Color(0xFFFFC107), width: 2),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFD32F2F).withValues(alpha: 0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+              boxShadow: [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))],
             ),
             child: IconButton(
               icon: const Icon(Icons.chevron_right_rounded, size: 20),
@@ -440,37 +313,59 @@ class ChatArea extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectedConversationId = messagesProvider.selectedConversationId;
 
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(
-            'https://storage.googleapis.com/micro-enigma-235001.appspot.com/cms_v2/images/new_year_background.jpg',
-          ),
-          fit: BoxFit.cover,
-          opacity: 0.3,
-        ),
-      ),
-      child: selectedConversationId == null
-          ? _buildEmptyState()
-          : Builder(
-              builder: (context) {
-                final messages = messagesProvider.getMessagesByConversationId(selectedConversationId);
-
-                if (messages.isEmpty) {
-                  return _buildNoMessagesState();
-                }
-
-                return ListView.builder(
-                  padding: const EdgeInsets.all(24),
-                  reverse: false,
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    final message = messages[index];
-                    return MessageBubble(message: message);
-                  },
-                );
-              },
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage('https://storage.googleapis.com/micro-enigma-235001.appspot.com/cms_v2/images/new_year_background.jpg'),
+              fit: BoxFit.cover,
+              opacity: 0.3,
             ),
+          ),
+          child: selectedConversationId == null
+              ? _buildEmptyState()
+              : Builder(
+                  builder: (context) {
+                    final messages = messagesProvider.getMessagesByConversationId(selectedConversationId);
+
+                    if (messages.isEmpty) {
+                      return _buildNoMessagesState();
+                    }
+
+                    return ListView.builder(
+                      padding: const EdgeInsets.all(24),
+                      reverse: false,
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        final message = messages[index];
+                        return MessageBubble(message: message);
+                      },
+                    );
+                  },
+                ),
+        ),
+
+        if (messagesProvider.loading)
+          Positioned.fill(
+            child: Container(
+              color: Colors.black.withValues(alpha: 0.5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.network('https://storage.googleapis.com/micro-enigma-235001.appspot.com/cms_v2/images/new_year_loading.gif', fit: BoxFit.contain),
+                  ),
+                  Text(
+                    'Loading...',
+                    style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800),
+                  ),
+                ],
+              ),
+            ),
+          ),
+      ],
     );
   }
 
@@ -483,24 +378,12 @@ class ChatArea extends StatelessWidget {
             width: 140,
             height: 140,
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFE082), Color(0xFFFFD54F), Color(0xFFFFC107)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFFFFE082), Color(0xFFFFD54F), Color(0xFFFFC107)], begin: Alignment.topLeft, end: Alignment.bottomRight),
               borderRadius: BorderRadius.circular(70),
               border: Border.all(color: const Color(0xFFD32F2F), width: 4),
               boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFD32F2F).withValues(alpha: 0.3),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-                BoxShadow(
-                  color: const Color(0xFFFFC107).withValues(alpha: 0.4),
-                  blurRadius: 30,
-                  offset: const Offset(0, 12),
-                ),
+                BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 20, offset: const Offset(0, 8)),
+                BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.4), blurRadius: 30, offset: const Offset(0, 12)),
               ],
             ),
             child: const Center(
@@ -518,35 +401,24 @@ class ChatArea extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFC107), Color(0xFFFFB300)],
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFFFFC107), Color(0xFFFFB300)]),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: const Color(0xFFD32F2F), width: 2),
             ),
             child: const Text(
-              'Chọn cuộc trò chuyện',
+              'Select a conversation',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w900,
                 color: Colors.white,
-                shadows: [
-                  Shadow(
-                    color: Color(0xFFD32F2F),
-                    blurRadius: 4,
-                  ),
-                ],
+                shadows: [Shadow(color: Color(0xFFD32F2F), blurRadius: 4)],
               ),
             ),
           ),
           const SizedBox(height: 12),
           Text(
-            'Chọn một cuộc trò chuyện từ danh sách bên trái',
-            style: TextStyle(
-              fontSize: 14,
-              color: const Color(0xFFD32F2F),
-              fontWeight: FontWeight.w600,
-            ),
+            'Select a conversation from the list on the left',
+            style: TextStyle(fontSize: 14, color: const Color(0xFFD32F2F), fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -562,33 +434,17 @@ class ChatArea extends StatelessWidget {
             width: 100,
             height: 100,
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFE082), Color(0xFFFFD54F)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFFFFE082), Color(0xFFFFD54F)], begin: Alignment.topLeft, end: Alignment.bottomRight),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(color: const Color(0xFFD32F2F), width: 3),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFFFC107).withValues(alpha: 0.4),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+              boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.4), blurRadius: 12, offset: const Offset(0, 4))],
             ),
-            child: const Center(
-              child: Text('🧧', style: TextStyle(fontSize: 50)),
-            ),
+            child: const Center(child: Text('🧧', style: TextStyle(fontSize: 50))),
           ),
           const SizedBox(height: 20),
           Text(
             'Chưa có tin nhắn',
-            style: TextStyle(
-              fontSize: 16,
-              color: const Color(0xFFD32F2F),
-              fontWeight: FontWeight.w800,
-            ),
+            style: TextStyle(fontSize: 16, color: const Color(0xFFD32F2F), fontWeight: FontWeight.w800),
           ),
         ],
       ),

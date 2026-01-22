@@ -21,7 +21,6 @@ class MessagesProvider with ChangeNotifier {
   int get currentPage => _currentPage;
   int itemsPerPage = 100;
 
-  // All conversations (không phân trang)
   List<Conversation> get conversations {
     final seen = <String>{};
     final uniqueConversations = <Conversation>[];
@@ -38,11 +37,14 @@ class MessagesProvider with ChangeNotifier {
   String? _selectedConversationId;
   String? get selectedConversationId => _selectedConversationId;
 
+  // Loading
+  bool loading = false;
+
   // Set filters
   void setFilters(String? appName, List<String>? flowTitles) async {
     _appNameFilter = appName;
     _flowTitleFilter = flowTitles;
-    _currentPage = 1; // Reset về trang 1 khi filter thay đổi
+    _currentPage = 1;
 
     getMessages();
   }
@@ -63,6 +65,9 @@ class MessagesProvider with ChangeNotifier {
   }
 
   Future<void> getMessages() async {
+    loading = true;
+    notifyListeners();
+
     final queryParams = {
       if (_appNameFilter != null) 'app_name': _appNameFilter,
       if (_flowTitleFilter != null) 'flow_titles': _flowTitleFilter!.join(','),
@@ -76,9 +81,12 @@ class MessagesProvider with ChangeNotifier {
       _messages.clear();
       _messages.addAll(messageDataList.map((msg) => Message.fromJson(msg)));
 
+      loading = false;
       notifyListeners();
     } else {
       debugPrint('Error in getMessages: ${response.data}');
+      loading = false;
+      notifyListeners();
     }
   }
 

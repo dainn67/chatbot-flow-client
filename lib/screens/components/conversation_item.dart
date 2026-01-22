@@ -11,7 +11,7 @@ class ConversationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 0),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -19,7 +19,7 @@ class ConversationItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               gradient: isSelected
                   ? const LinearGradient(

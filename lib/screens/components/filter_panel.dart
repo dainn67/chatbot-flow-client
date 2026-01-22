@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Widget bộ lọc tối giản cho conversations
 class FilterPanel extends StatefulWidget {
   final String? appNameFilter;
   final List<String>? flowTitleFilter;
@@ -59,20 +58,10 @@ class _FilterPanelState extends State<FilterPanel> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        gradient: const LinearGradient(colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1)], begin: Alignment.topCenter, end: Alignment.bottomCenter),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFD32F2F), width: 2.5),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFFFFC107).withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4))],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -88,35 +77,22 @@ class _FilterPanelState extends State<FilterPanel> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      gradient: _hasActiveFilters
-                          ? const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)])
-                          : null,
+                      gradient: _hasActiveFilters ? const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]) : null,
                       color: _hasActiveFilters ? null : const Color(0xFFFFE082),
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: _hasActiveFilters ? const Color(0xFFFFC107) : const Color(0xFFD32F2F),
-                        width: 2,
-                      ),
+                      border: Border.all(color: _hasActiveFilters ? const Color(0xFFFFC107) : const Color(0xFFD32F2F), width: 2),
                     ),
-                    child: Text(
-                      '🎯',
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    child: Text('🎯', style: TextStyle(fontSize: 16)),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      'Bộ lọc',
+                      'Filter',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w800,
                         color: const Color(0xFFB71C1C),
-                        shadows: [
-                          Shadow(
-                            color: const Color(0xFFFFC107).withValues(alpha: 0.3),
-                            blurRadius: 4,
-                          ),
-                        ],
+                        shadows: [Shadow(color: const Color(0xFFFFC107).withValues(alpha: 0.3), blurRadius: 4)],
                       ),
                     ),
                   ),
@@ -124,16 +100,11 @@ class _FilterPanelState extends State<FilterPanel> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFFFC107), Color(0xFFFFB300)],
-                        ),
+                        gradient: const LinearGradient(colors: [Color(0xFFFFC107), Color(0xFFFFB300)]),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: const Color(0xFFD32F2F), width: 1.5),
                       ),
-                      child: const Text(
-                        '✨',
-                        style: TextStyle(fontSize: 12),
-                      ),
+                      child: const Text('✨', style: TextStyle(fontSize: 12)),
                     ),
                   const SizedBox(width: 10),
                   Container(
@@ -143,11 +114,7 @@ class _FilterPanelState extends State<FilterPanel> {
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(color: const Color(0xFFD32F2F), width: 1.5),
                     ),
-                    child: Icon(
-                      _isExpanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded,
-                      size: 18,
-                      color: const Color(0xFFD32F2F),
-                    ),
+                    child: Icon(_isExpanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded, size: 18, color: const Color(0xFFD32F2F)),
                   ),
                 ],
               ),
@@ -158,11 +125,7 @@ class _FilterPanelState extends State<FilterPanel> {
           if (_isExpanded) ...[
             Container(
               height: 2,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0xFFD32F2F), Color(0xFFFFC107), Color(0xFFD32F2F)],
-                ),
-              ),
+              decoration: const BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFFFC107), Color(0xFFD32F2F)])),
             ),
             Padding(
               padding: const EdgeInsets.all(14),
@@ -170,7 +133,7 @@ class _FilterPanelState extends State<FilterPanel> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // App Name Filter
-                  _buildFilterField(label: 'Tên ứng dụng', controller: _appNameController, hintText: 'Nhập tên ứng dụng...', icon: Icons.apps_rounded),
+                  _buildFilterField(label: 'App Name', controller: _appNameController, hintText: 'Enter app name...', icon: Icons.apps_rounded),
                   const SizedBox(height: 16),
 
                   // Flow Title Filter (Checkboxes)
@@ -189,7 +152,7 @@ class _FilterPanelState extends State<FilterPanel> {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           ),
                           child: const Text(
-                            'Xóa bộ lọc',
+                            'Clear Filter',
                             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFFD32F2F)),
                           ),
                         ),
@@ -198,18 +161,10 @@ class _FilterPanelState extends State<FilterPanel> {
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFFD32F2F), Color(0xFFC62828)],
-                            ),
+                            gradient: const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]),
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(color: const Color(0xFFFFC107), width: 2),
-                            boxShadow: [
-                              BoxShadow(
-                                color: const Color(0xFFD32F2F).withValues(alpha: 0.3),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
+                            boxShadow: [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))],
                           ),
                           child: ElevatedButton(
                             onPressed: _applyFilter,
@@ -248,11 +203,7 @@ class _FilterPanelState extends State<FilterPanel> {
             const SizedBox(width: 6),
             Text(
               label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w800,
-                color: const Color(0xFFB71C1C),
-              ),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: const Color(0xFFB71C1C)),
             ),
           ],
         ),
@@ -297,12 +248,8 @@ class _FilterPanelState extends State<FilterPanel> {
             Text('🎭', style: TextStyle(fontSize: 14)),
             const SizedBox(width: 6),
             Text(
-              'Loại Flow',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w800,
-                color: const Color(0xFFB71C1C),
-              ),
+              'Flow Type',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: const Color(0xFFB71C1C)),
             ),
           ],
         ),
@@ -310,11 +257,7 @@ class _FilterPanelState extends State<FilterPanel> {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFFFFF8E1), Color(0xFFFFECB3)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            gradient: const LinearGradient(colors: [Color(0xFFFFF8E1), Color(0xFFFFECB3)], begin: Alignment.topLeft, end: Alignment.bottomRight),
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: const Color(0xFFFFE082), width: 2),
           ),
@@ -337,41 +280,20 @@ class _FilterPanelState extends State<FilterPanel> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
-                    gradient: isSelected
-                        ? const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)])
-                        : null,
+                    gradient: isSelected ? const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]) : null,
                     color: isSelected ? null : Colors.white,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: isSelected ? const Color(0xFFFFC107) : const Color(0xFFD32F2F),
-                      width: 2,
-                    ),
-                    boxShadow: isSelected
-                        ? [
-                            BoxShadow(
-                              color: const Color(0xFFD32F2F).withValues(alpha: 0.3),
-                              blurRadius: 6,
-                              offset: const Offset(0, 2),
-                            ),
-                          ]
-                        : null,
+                    border: Border.all(color: isSelected ? const Color(0xFFFFC107) : const Color(0xFFD32F2F), width: 2),
+                    boxShadow: isSelected ? [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 6, offset: const Offset(0, 2))] : null,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
-                        isSelected ? Icons.check_circle : Icons.circle_outlined,
-                        size: 18,
-                        color: isSelected ? const Color(0xFFFFC107) : const Color(0xFFD32F2F),
-                      ),
+                      Icon(isSelected ? Icons.check_circle : Icons.circle_outlined, size: 18, color: isSelected ? const Color(0xFFFFC107) : const Color(0xFFD32F2F)),
                       const SizedBox(width: 6),
                       Text(
                         option,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                          color: isSelected ? Colors.white : const Color(0xFFD32F2F),
-                        ),
+                        style: TextStyle(fontSize: 12, fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600, color: isSelected ? Colors.white : const Color(0xFFD32F2F)),
                       ),
                     ],
                   ),
