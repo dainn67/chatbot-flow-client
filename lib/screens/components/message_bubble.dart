@@ -147,7 +147,14 @@ class MessageBubble extends StatelessWidget {
 
     // Question message
     if (isQuestion) {
-      final questionJson = jsonDecode(text?.replaceAll('```json', '').replaceAll('```', '') ?? '');
+      Map<String, dynamic> questionJson;
+      try {
+        questionJson = jsonDecode(text?.replaceAll('```json', '').replaceAll('```', '') ?? '');
+      } catch (e) {
+        questionJson = {};
+        return SelectableText(text ?? '', style: style);
+      }
+
       final question = questionJson['question'];
       final options = questionJson['options'] as List<dynamic>;
       final explanation = questionJson['explanation'];
