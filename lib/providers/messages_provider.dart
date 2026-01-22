@@ -16,7 +16,12 @@ class MessagesProvider with ChangeNotifier {
   String? get appNameFilter => _appNameFilter;
   List<String>? get flowTitleFilter => _flowTitleFilter;
 
-  // Conversation IDs
+  // Pagination
+  int _currentPage = 1;
+  int get currentPage => _currentPage;
+  int itemsPerPage = 100;
+
+  // All conversations (không phân trang)
   List<Conversation> get conversations {
     final seen = <String>{};
     final uniqueConversations = <Conversation>[];
@@ -37,15 +42,19 @@ class MessagesProvider with ChangeNotifier {
   void setFilters(String? appName, List<String>? flowTitles) async {
     _appNameFilter = appName;
     _flowTitleFilter = flowTitles;
+    _currentPage = 1; // Reset về trang 1 khi filter thay đổi
 
-    final queryParams = {if (appName != null) 'app_name': appName, if (flowTitles != null) 'flow_titles': flowTitles.join(',')};
+    getMessages();
+  }
 
-    final response = await _apiService.get('/api/messages/get-with-filters', queryParams: queryParams);
-    final messageDataList = response.data as List<dynamic>;
-    _messages.clear();
-    _messages.addAll(messageDataList.map((msg) => Message.fromJson(msg)));
+  void nextPage() {
+    _currentPage++;
+    getMessages();
+  }
 
-    notifyListeners();
+  void previousPage() {
+    _currentPage--;
+    getMessages();
   }
 
   void selectConversation(String conversationId) {
@@ -54,10 +63,17 @@ class MessagesProvider with ChangeNotifier {
   }
 
   Future<void> getMessages() async {
-    final response = await _apiService.get('/api/messages/get-all');
+    final queryParams = {
+      if (_appNameFilter != null) 'app_name': _appNameFilter,
+      if (_flowTitleFilter != null) 'flow_titles': _flowTitleFilter!.join(','),
+      'skip': (_currentPage - 1) * itemsPerPage,
+    };
+
+    final response = await _apiService.get('/api/messages/get-messages', queryParams: queryParams);
     final messageDataList = response.data as List<dynamic>;
     _messages.clear();
     _messages.addAll(messageDataList.map((msg) => Message.fromJson(msg)));
+
     notifyListeners();
   }
 

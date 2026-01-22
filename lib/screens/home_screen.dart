@@ -130,6 +130,9 @@ class ConversationSidebar extends StatelessWidget {
                     },
                   ),
           ),
+
+          // Pagination
+          _buildPagination(messagesProvider),
         ],
       ),
     );
@@ -153,6 +156,54 @@ class ConversationSidebar extends StatelessWidget {
           Text(
             'No conversations',
             style: TextStyle(fontSize: 14, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPagination(MessagesProvider provider) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(top: BorderSide(color: Colors.grey.shade200, width: 1)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Previous button
+          IconButton(
+            icon: const Icon(Icons.chevron_left_rounded, size: 20),
+            onPressed: provider.currentPage > 1 ? () => provider.previousPage() : null,
+            color: provider.currentPage > 1 ? const Color(0xFF3B82F6) : Colors.grey.shade400,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+            style: IconButton.styleFrom(
+              backgroundColor: provider.currentPage > 1 ? const Color(0xFF3B82F6).withValues(alpha: 0.1) : Colors.grey.shade100,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+            ),
+          ),
+          const SizedBox(width: 12),
+
+          // Page info
+          Text(
+            '${provider.currentPage}',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.grey.shade700),
+          ),
+          const SizedBox(width: 12),
+
+          // Next button
+          IconButton(
+            icon: const Icon(Icons.chevron_right_rounded, size: 20),
+            onPressed: () => provider.nextPage(),
+            color: const Color(0xFF3B82F6),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+            style: IconButton.styleFrom(
+              backgroundColor: const Color(0xFF3B82F6).withValues(alpha: 0.1),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+            ),
           ),
         ],
       ),
