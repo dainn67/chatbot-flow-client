@@ -51,8 +51,6 @@ class ApiService {
   Future<ApiResponse> get(String endpoint, {Map<String, dynamic>? queryParams, Map<String, String>? headers}) async {
     try {
       final url = _buildUrl(endpoint, queryParams: queryParams);
-      print('url: $url');
-      print('headers: ${_getHeaders(additionalHeaders: headers)}');
       final response = await http.get(url, headers: _getHeaders(additionalHeaders: headers));
 
       return _handleResponse(response);
