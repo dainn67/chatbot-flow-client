@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:chatbotflowclient/models/message.dart';
-import 'package:chatbotflowclient/screens/components/text_content_simple.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
