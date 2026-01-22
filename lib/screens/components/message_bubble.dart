@@ -188,30 +188,7 @@ class MessageBubble extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Divider(color: Colors.grey.shade300, height: 1),
             ),
-            Row(
-              children: [
-                ...suggestedPrompts.map(
-                  (prompt) => Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFEFF6FF), Color(0xFFDBEAFE)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: const Color(0xFFBFDBFE), width: 1),
-                      ),
-                      child: Center(
-                        child: TextContentSimple(inputText: prompt, style: style),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            _buildSuggestedPrompts(suggestedPrompts, style),
           ],
         ],
       );
@@ -221,33 +198,7 @@ class MessageBubble extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextContentSimple(inputText: text ?? '', style: style),
-        if (suggestedPrompts.isNotEmpty) ...[
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              ...suggestedPrompts.map(
-                (prompt) => Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFEFF6FF), Color(0xFFDBEAFE)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: const Color(0xFFBFDBFE), width: 1),
-                    ),
-                    child: Center(
-                      child: TextContentSimple(inputText: prompt, style: style),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+        if (suggestedPrompts.isNotEmpty) ...[const SizedBox(height: 12), _buildSuggestedPrompts(suggestedPrompts, style)],
         if (summary != null) ...[
           const SizedBox(height: 12),
           Container(
@@ -272,4 +223,25 @@ class MessageBubble extends StatelessWidget {
       ],
     );
   }
+
+  Widget _buildSuggestedPrompts(List<dynamic> prompts, TextStyle style) => Row(
+    children: [
+      ...prompts.map(
+        (prompt) => Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(colors: [Color(0xFFEFF6FF), Color(0xFFDBEAFE)], begin: Alignment.topLeft, end: Alignment.bottomRight),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: const Color(0xFFBFDBFE), width: 1),
+            ),
+            child: Center(
+              child: TextContentSimple(inputText: prompt, style: style, textAlign: TextAlign.center),
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
 }
