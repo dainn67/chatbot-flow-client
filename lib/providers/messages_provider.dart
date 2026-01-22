@@ -70,11 +70,16 @@ class MessagesProvider with ChangeNotifier {
     };
 
     final response = await _apiService.get('/api/messages/get-messages', queryParams: queryParams);
-    final messageDataList = response.data as List<dynamic>;
-    _messages.clear();
-    _messages.addAll(messageDataList.map((msg) => Message.fromJson(msg)));
 
-    notifyListeners();
+    if (response.statusCode == 200) {
+      final messageDataList = response.data as List<dynamic>;
+      _messages.clear();
+      _messages.addAll(messageDataList.map((msg) => Message.fromJson(msg)));
+
+      notifyListeners();
+    } else {
+      debugPrint('Error in getMessages: ${response.data}');
+    }
   }
 
   List<Message> getMessagesByConversationId(String conversationId) {

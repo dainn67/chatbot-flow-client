@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../configs/api_config.dart';
 
@@ -49,14 +50,18 @@ class ApiService {
       final response = await http.get(url, headers: _getHeaders(additionalHeaders: headers));
 
       return _handleResponse(response);
-    } on SocketException {
-      throw ApiException('Không có kết nối internet');
-    } on HttpException {
-      throw ApiException('Không tìm thấy dữ liệu');
-    } on FormatException {
-      throw ApiException('Định dạng dữ liệu không hợp lệ');
+    } on SocketException catch (e) {
+      debugPrint('SocketException: $e');
+      return ApiResponse(statusCode: 500, data: 'Không có kết nối internet', success: false);
+    } on HttpException catch (e) {
+      debugPrint('HttpException: $e');
+      return ApiResponse(statusCode: 500, data: 'Không tìm thấy dữ liệu', success: false);
+    } on FormatException catch (e) {
+      debugPrint('FormatException: $e');
+      return ApiResponse(statusCode: 500, data: 'Định dạng dữ liệu không hợp lệ', success: false);
     } catch (e) {
-      throw ApiException('Lỗi không xác định: $e');
+      debugPrint('Exception: $e');
+      return ApiResponse(statusCode: 500, data: 'Lỗi không xác định: $e', success: false);
     }
   }
 
