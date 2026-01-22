@@ -1,4 +1,5 @@
 import 'package:chatbotflowclient/screens/components/conversation_item.dart';
+import 'package:chatbotflowclient/screens/components/filter_panel.dart';
 import 'package:chatbotflowclient/screens/components/message_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -89,11 +90,20 @@ class ConversationSidebar extends StatelessWidget {
         children: [
           // Header
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
             child: Text(
               'Conversations',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.grey.shade800),
             ),
+          ),
+
+          // Filter Panel
+          FilterPanel(
+            appNameFilter: messagesProvider.appNameFilter,
+            flowTitleFilter: messagesProvider.flowTitleFilter,
+            onFilterChanged: (appName, flowTitle) {
+              messagesProvider.setFilters(appName, flowTitle);
+            },
           ),
 
           // List of conversations
@@ -102,7 +112,7 @@ class ConversationSidebar extends StatelessWidget {
                 ? _buildEmptyState()
                 : ListView.builder(
                     shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     itemCount: messagesProvider.conversations.length,
                     itemBuilder: (context, index) {
                       final conversation = messagesProvider.conversations[index];
