@@ -17,7 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<MessagesProvider>(context, listen: false).getMessages();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<MessagesProvider>(context, listen: false).getMessages();
+    });
   }
 
   @override
