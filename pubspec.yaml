@@ -40,6 +40,9 @@ dependencies:
   
   # HTTP client
   http: ^1.2.0
+  collection: ^1.19.1
+  flutter_html: ^3.0.0
+  flutter_math_fork: ^0.7.4
 
 dev_dependencies:
   flutter_test:

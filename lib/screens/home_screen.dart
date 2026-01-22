@@ -25,11 +25,31 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
-        title: const Text(
-          'Chatbotflow',
-          style: TextStyle(color: Color(0xFF1A1A1A), fontSize: 20, fontWeight: FontWeight.w600),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(colors: [Color(0xFFFFFFFF), Color(0xFFF9FAFB)], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+          ),
+        ),
+        title: Row(
+          children: [
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(colors: [Color(0xFF3B82F6), Color(0xFF2563EB)], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [BoxShadow(color: const Color(0xFF3B82F6).withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))],
+              ),
+              child: const Icon(Icons.chat_bubble_rounded, color: Colors.white, size: 18),
+            ),
+            const SizedBox(width: 12),
+            const Text(
+              'Chatbotflow',
+              style: TextStyle(color: Color(0xFF1A1A1A), fontSize: 20, fontWeight: FontWeight.w700, letterSpacing: -0.5),
+            ),
+          ],
         ),
         actions: [
           IconButton(
@@ -43,13 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Consumer<MessagesProvider>(
         builder: (context, messagesProvider, child) => Row(
           children: [
-            // Sidebar - Danh sách cuộc hội thoại
             ConversationSidebar(messagesProvider: messagesProvider),
-
-            // Divider
             Container(width: 1, color: const Color(0xFFE5E7EB)),
-
-            // Khu vực chat chính
             Expanded(child: ChatArea(messagesProvider: messagesProvider)),
           ],
         ),
@@ -87,7 +102,7 @@ class ConversationSidebar extends StatelessWidget {
                 ? _buildEmptyState()
                 : ListView.builder(
                     shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     itemCount: messagesProvider.conversations.length,
                     itemBuilder: (context, index) {
                       final conversation = messagesProvider.conversations[index];
@@ -114,9 +129,20 @@ class ConversationSidebar extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.chat_bubble_outline_rounded, size: 64, color: Colors.grey.shade300),
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [Colors.grey.shade100, Colors.grey.shade50], begin: Alignment.topLeft, end: Alignment.bottomRight),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Icon(Icons.chat_bubble_outline_rounded, size: 40, color: Colors.grey.shade400),
+          ),
           const SizedBox(height: 16),
-          Text('No conversations', style: TextStyle(fontSize: 14, color: Colors.grey.shade500)),
+          Text(
+            'No conversations',
+            style: TextStyle(fontSize: 14, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+          ),
         ],
       ),
     );
@@ -149,9 +175,7 @@ class ChatArea extends StatelessWidget {
       itemCount: messages.length,
       itemBuilder: (context, index) {
         final message = messages[index];
-        final isUser = index % 2 == 0;
-
-        return MessageBubble(message: message, isUser: isUser);
+        return MessageBubble(message: message);
       },
     );
   }
@@ -164,16 +188,27 @@ class ChatArea extends StatelessWidget {
           Container(
             width: 120,
             height: 120,
-            decoration: BoxDecoration(color: const Color(0xFFF3F4F6), borderRadius: BorderRadius.circular(60)),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [const Color(0xFFF3F4F6), const Color(0xFFE5E7EB)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(60),
+              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 20, offset: const Offset(0, 10))],
+            ),
             child: const Icon(Icons.forum_outlined, size: 60, color: Color(0xFF9CA3AF)),
           ),
           const SizedBox(height: 24),
           const Text(
             'Select a conversation',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF374151)),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Color(0xFF374151), letterSpacing: -0.5),
           ),
           const SizedBox(height: 8),
-          Text('Select a conversation from the list on the left', style: TextStyle(fontSize: 14, color: Colors.grey.shade500)),
+          Text(
+            'Select a conversation from the list on the left',
+            style: TextStyle(fontSize: 14, color: Colors.grey.shade500, fontWeight: FontWeight.w400),
+          ),
         ],
       ),
     );
@@ -184,9 +219,20 @@ class ChatArea extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.chat_bubble_outline_rounded, size: 64, color: Colors.grey.shade300),
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [Colors.grey.shade100, Colors.grey.shade50], begin: Alignment.topLeft, end: Alignment.bottomRight),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Icon(Icons.chat_bubble_outline_rounded, size: 40, color: Colors.grey.shade400),
+          ),
           const SizedBox(height: 16),
-          Text('No messages', style: TextStyle(fontSize: 14, color: Colors.grey.shade500)),
+          Text(
+            'No messages',
+            style: TextStyle(fontSize: 14, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+          ),
         ],
       ),
     );

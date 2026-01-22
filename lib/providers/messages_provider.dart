@@ -11,8 +11,17 @@ class MessagesProvider with ChangeNotifier {
   List<Message> get messages => _messages;
 
   // Conversation IDs
-  List<Conversation> get conversations =>
-      _messages.map((msg) => Conversation(conversationId: msg.conversationId, appName: msg.appName)).toSet().toList();
+  List<Conversation> get conversations {
+    final seen = <String>{};
+    final uniqueConversations = <Conversation>[];
+    for (final msg in _messages) {
+      if (!seen.contains(msg.conversationId)) {
+        seen.add(msg.conversationId);
+        uniqueConversations.add(Conversation(conversationId: msg.conversationId, appName: msg.appName));
+      }
+    }
+    return uniqueConversations;
+  }
 
   String? _selectedConversationId;
   String? get selectedConversationId => _selectedConversationId;
@@ -31,6 +40,21 @@ class MessagesProvider with ChangeNotifier {
   }
 
   List<Message> getMessagesByConversationId(String conversationId) {
-    return _messages.where((msg) => msg.conversationId == conversationId).toList();
+    final messages = _messages.where((msg) => msg.conversationId == conversationId).toList();
+
+    messages.sort((a, b) {
+      final dateA = DateTime.tryParse(a.createdAt) ?? DateTime.fromMillisecondsSinceEpoch(0);
+      final dateB = DateTime.tryParse(b.createdAt) ?? DateTime.fromMillisecondsSinceEpoch(0);
+
+      if (dateA.compareTo(dateB) != 0) {
+        return dateA.compareTo(dateB);
+      } else {
+        if (a.role == 'user' && b.role != 'user') return -1;
+        if (a.role != 'user' && b.role == 'user') return 1;
+        return 0;
+      }
+    });
+
+    return messages;
   }
 }
