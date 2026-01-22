@@ -23,40 +23,104 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
+      backgroundColor: const Color(0xFFFFF3E0),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [Color(0xFFFFFFFF), Color(0xFFF9FAFB)], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+            gradient: LinearGradient(
+              colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1), Color(0xFFFFE8CC)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            border: Border(
+              bottom: BorderSide(color: Color(0xFFFFC107), width: 3),
+            ),
           ),
         ),
         title: Row(
           children: [
             Container(
-              width: 32,
-              height: 32,
+              width: 40,
+              height: 40,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(colors: [Color(0xFF3B82F6), Color(0xFF2563EB)], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [BoxShadow(color: const Color(0xFF3B82F6).withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))],
+                gradient: const LinearGradient(
+                  colors: [Color(0xFFD32F2F), Color(0xFFC62828), Color(0xFFB71C1C)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFFFFC107), width: 2.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFFD32F2F).withValues(alpha: 0.4),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                  BoxShadow(
+                    color: const Color(0xFFFFC107).withValues(alpha: 0.3),
+                    blurRadius: 20,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
               ),
-              child: const Icon(Icons.chat_bubble_rounded, color: Colors.white, size: 18),
+              child: const Icon(Icons.chat_bubble_rounded, color: Colors.white, size: 20),
             ),
-            const SizedBox(width: 12),
-            const Text(
-              'Chatbotflow',
-              style: TextStyle(color: Color(0xFF1A1A1A), fontSize: 20, fontWeight: FontWeight.w700, letterSpacing: -0.5),
+            const SizedBox(width: 14),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Chatbotflow',
+                  style: TextStyle(
+                    color: Color(0xFFB71C1C),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 0.5,
+                    shadows: [
+                      Shadow(
+                        color: Color(0xFFFFC107),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  'Xuân Ất Tỵ 2026 🧧',
+                  style: TextStyle(
+                    color: Color(0xFFD32F2F),
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh_rounded, color: Color(0xFF6B7280)),
-            tooltip: 'Refresh',
-            onPressed: () => context.read<MessagesProvider>().getMessages(),
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFFC107), Color(0xFFFFB300)],
+              ),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFFFC107).withValues(alpha: 0.4),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.refresh_rounded, color: Colors.white),
+              tooltip: 'Refresh',
+              onPressed: () => context.read<MessagesProvider>().getMessages(),
+            ),
           ),
           const SizedBox(width: 8),
         ],
@@ -65,7 +129,16 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, messagesProvider, child) => Row(
           children: [
             ConversationSidebar(messagesProvider: messagesProvider),
-            Container(width: 1, color: const Color(0xFFE5E7EB)),
+            Container(
+              width: 3,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFFD32F2F), Color(0xFFFFC107), Color(0xFFD32F2F)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+            ),
             Expanded(child: ChatArea(messagesProvider: messagesProvider)),
           ],
         ),
@@ -84,16 +157,83 @@ class ConversationSidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 280,
-      color: Colors.white,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFFFFFDE7), Color(0xFFFFF8E1), Color(0xFFFFECB3)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-            child: Text(
-              'Conversations',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.grey.shade800),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              border: const Border(
+                bottom: BorderSide(color: Color(0xFFFFC107), width: 2),
+              ),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFD32F2F), Color(0xFFC62828)],
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: const Color(0xFFFFC107), width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFD32F2F).withValues(alpha: 0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Text(
+                    '🏮',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Conversations',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          color: const Color(0xFFB71C1C),
+                          shadows: [
+                            Shadow(
+                              color: const Color(0xFFFFC107).withValues(alpha: 0.3),
+                              blurRadius: 4,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        'Chúc mừng năm mới',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFFD32F2F),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
 
@@ -147,15 +287,33 @@ class ConversationSidebar extends StatelessWidget {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [Colors.grey.shade100, Colors.grey.shade50], begin: Alignment.topLeft, end: Alignment.bottomRight),
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFFE082), Color(0xFFFFD54F)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
               borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: const Color(0xFFD32F2F), width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFFFC107).withValues(alpha: 0.4),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
-            child: Icon(Icons.chat_bubble_outline_rounded, size: 40, color: Colors.grey.shade400),
+            child: const Center(
+              child: Text('🧧', style: TextStyle(fontSize: 40)),
+            ),
           ),
           const SizedBox(height: 16),
           Text(
-            'No conversations',
-            style: TextStyle(fontSize: 14, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+            'Chưa có cuộc trò chuyện',
+            style: TextStyle(
+              fontSize: 14,
+              color: const Color(0xFFD32F2F),
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),
@@ -164,45 +322,106 @@ class ConversationSidebar extends StatelessWidget {
 
   Widget _buildPagination(MessagesProvider provider) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey.shade200, width: 1)),
+        gradient: const LinearGradient(
+          colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        border: const Border(
+          top: BorderSide(color: Color(0xFFFFC107), width: 2),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Previous button
-          IconButton(
-            icon: const Icon(Icons.chevron_left_rounded, size: 20),
-            onPressed: provider.currentPage > 1 ? () => provider.previousPage() : null,
-            color: provider.currentPage > 1 ? const Color(0xFF3B82F6) : Colors.grey.shade400,
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-            style: IconButton.styleFrom(
-              backgroundColor: provider.currentPage > 1 ? const Color(0xFF3B82F6).withValues(alpha: 0.1) : Colors.grey.shade100,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          Container(
+            decoration: BoxDecoration(
+              gradient: provider.currentPage > 1
+                  ? const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)])
+                  : null,
+              color: provider.currentPage > 1 ? null : const Color(0xFFFFE082),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: provider.currentPage > 1 ? const Color(0xFFFFC107) : const Color(0xFFFFD54F),
+                width: 2,
+              ),
+              boxShadow: provider.currentPage > 1
+                  ? [
+                      BoxShadow(
+                        color: const Color(0xFFD32F2F).withValues(alpha: 0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ]
+                  : null,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.chevron_left_rounded, size: 20),
+              onPressed: provider.currentPage > 1 ? () => provider.previousPage() : null,
+              color: provider.currentPage > 1 ? Colors.white : const Color(0xFFD32F2F),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 38, minHeight: 38),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 16),
 
           // Page info
-          Text(
-            '${provider.currentPage}',
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.grey.shade700),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFFC107), Color(0xFFFFB300)],
+              ),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFD32F2F), width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFFFC107).withValues(alpha: 0.4),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Text(
+              'Trang ${provider.currentPage}',
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                    color: Color(0xFFD32F2F),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+            ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 16),
 
           // Next button
-          IconButton(
-            icon: const Icon(Icons.chevron_right_rounded, size: 20),
-            onPressed: () => provider.nextPage(),
-            color: const Color(0xFF3B82F6),
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-            style: IconButton.styleFrom(
-              backgroundColor: const Color(0xFF3B82F6).withValues(alpha: 0.1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: const Color(0xFFFFC107), width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFD32F2F).withValues(alpha: 0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.chevron_right_rounded, size: 20),
+              onPressed: () => provider.nextPage(),
+              color: Colors.white,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 38, minHeight: 38),
             ),
           ),
         ],
@@ -248,28 +467,73 @@ class ChatArea extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 120,
-            height: 120,
+            width: 140,
+            height: 140,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [const Color(0xFFF3F4F6), const Color(0xFFE5E7EB)],
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFFE082), Color(0xFFFFD54F), Color(0xFFFFC107)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: BorderRadius.circular(60),
-              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 20, offset: const Offset(0, 10))],
+              borderRadius: BorderRadius.circular(70),
+              border: Border.all(color: const Color(0xFFD32F2F), width: 4),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFD32F2F).withValues(alpha: 0.3),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+                BoxShadow(
+                  color: const Color(0xFFFFC107).withValues(alpha: 0.4),
+                  blurRadius: 30,
+                  offset: const Offset(0, 12),
+                ),
+              ],
             ),
-            child: const Icon(Icons.forum_outlined, size: 60, color: Color(0xFF9CA3AF)),
+            child: const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('🏮', style: TextStyle(fontSize: 50)),
+                  SizedBox(height: 4),
+                  Text('✨', style: TextStyle(fontSize: 20)),
+                ],
+              ),
+            ),
           ),
-          const SizedBox(height: 24),
-          const Text(
-            'Select a conversation',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Color(0xFF374151), letterSpacing: -0.5),
+          const SizedBox(height: 28),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFFC107), Color(0xFFFFB300)],
+              ),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: const Color(0xFFD32F2F), width: 2),
+            ),
+            child: const Text(
+              'Chọn cuộc trò chuyện',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w900,
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                    color: Color(0xFFD32F2F),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+            ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Text(
-            'Select a conversation from the list on the left',
-            style: TextStyle(fontSize: 14, color: Colors.grey.shade500, fontWeight: FontWeight.w400),
+            'Chọn một cuộc trò chuyện từ danh sách bên trái',
+            style: TextStyle(
+              fontSize: 14,
+              color: const Color(0xFFD32F2F),
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ],
       ),
@@ -282,18 +546,36 @@ class ChatArea extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 80,
-            height: 80,
+            width: 100,
+            height: 100,
             decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [Colors.grey.shade100, Colors.grey.shade50], begin: Alignment.topLeft, end: Alignment.bottomRight),
-              borderRadius: BorderRadius.circular(20),
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFFE082), Color(0xFFFFD54F)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: const Color(0xFFD32F2F), width: 3),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFFFC107).withValues(alpha: 0.4),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
-            child: Icon(Icons.chat_bubble_outline_rounded, size: 40, color: Colors.grey.shade400),
+            child: const Center(
+              child: Text('🧧', style: TextStyle(fontSize: 50)),
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           Text(
-            'No messages',
-            style: TextStyle(fontSize: 14, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+            'Chưa có tin nhắn',
+            style: TextStyle(
+              fontSize: 16,
+              color: const Color(0xFFD32F2F),
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ],
       ),
