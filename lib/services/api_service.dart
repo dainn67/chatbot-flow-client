@@ -10,7 +10,11 @@ class ApiService {
   ApiService._internal();
 
   String? _bearerToken;
-  final Map<String, String> _defaultHeaders = {'Content-Type': 'application/json', 'Accept': 'application/json'};
+  final Map<String, String> _defaultHeaders = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
 
   void setBearerToken(String token) {
     _bearerToken = token;
@@ -47,6 +51,8 @@ class ApiService {
   Future<ApiResponse> get(String endpoint, {Map<String, dynamic>? queryParams, Map<String, String>? headers}) async {
     try {
       final url = _buildUrl(endpoint, queryParams: queryParams);
+      print('url: $url');
+      print('headers: ${_getHeaders(additionalHeaders: headers)}');
       final response = await http.get(url, headers: _getHeaders(additionalHeaders: headers));
 
       return _handleResponse(response);
