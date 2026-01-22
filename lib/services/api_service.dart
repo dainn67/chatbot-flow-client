@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../configs/api_config.dart';
 
@@ -35,8 +34,7 @@ class ApiService {
   }
 
   Uri _buildUrl(String endpoint, {Map<String, dynamic>? queryParams}) {
-    final baseUrl = kDebugMode ? ApiConfig.baseLocalUrl : ApiConfig.baseUrl;
-    final url = Uri.parse('$baseUrl$endpoint');
+    final url = Uri.parse('${ApiConfig.baseUrl}$endpoint');
 
     if (queryParams != null && queryParams.isNotEmpty) {
       return url.replace(queryParameters: queryParams.map((key, value) => MapEntry(key, value.toString())));
