@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 /// Widget bộ lọc tối giản cho conversations
 class FilterPanel extends StatefulWidget {
   final String? appNameFilter;
-  final String? flowTitleFilter;
-  final Function(String? appName, String? flowTitle) onFilterChanged;
+  final List<String>? flowTitleFilter;
+  final Function(String? appName, List<String>? flowTitle) onFilterChanged;
 
   const FilterPanel({super.key, this.appNameFilter, this.flowTitleFilter, required this.onFilterChanged});
 
@@ -15,35 +15,44 @@ class FilterPanel extends StatefulWidget {
 class _FilterPanelState extends State<FilterPanel> {
   bool _isExpanded = false;
   late TextEditingController _appNameController;
-  late TextEditingController _flowTitleController;
+
+  // Dummy flow title options
+  final List<String> _flowTitleOptions = ['theory', 'question'];
+
+  final Set<String> _selectedFlowTitles = {};
 
   @override
   void initState() {
     super.initState();
     _appNameController = TextEditingController(text: widget.appNameFilter);
-    _flowTitleController = TextEditingController(text: widget.flowTitleFilter);
+
+    // Parse initial selected flow titles if any
+    if (widget.flowTitleFilter != null && widget.flowTitleFilter!.isNotEmpty) {
+      _selectedFlowTitles.addAll(widget.flowTitleFilter!);
+    }
   }
 
   @override
   void dispose() {
     _appNameController.dispose();
-    _flowTitleController.dispose();
     super.dispose();
   }
 
   void _applyFilter() {
     final appName = _appNameController.text.trim().isEmpty ? null : _appNameController.text.trim();
-    final flowTitle = _flowTitleController.text.trim().isEmpty ? null : _flowTitleController.text.trim();
+    final flowTitle = _selectedFlowTitles.isEmpty ? null : _selectedFlowTitles.toList();
     widget.onFilterChanged(appName, flowTitle);
   }
 
   void _clearFilter() {
-    _appNameController.clear();
-    _flowTitleController.clear();
+    setState(() {
+      _appNameController.clear();
+      _selectedFlowTitles.clear();
+    });
     widget.onFilterChanged(null, null);
   }
 
-  bool get _hasActiveFilters => (_appNameController.text.trim().isNotEmpty || _flowTitleController.text.trim().isNotEmpty);
+  bool get _hasActiveFilters => (_appNameController.text.trim().isNotEmpty || _selectedFlowTitles.isNotEmpty);
 
   @override
   Widget build(BuildContext context) {
@@ -107,15 +116,10 @@ class _FilterPanelState extends State<FilterPanel> {
                 children: [
                   // App Name Filter
                   _buildFilterField(label: 'App Name', controller: _appNameController, hintText: 'Enter app name...', icon: Icons.apps_rounded),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
 
-                  // Flow Title Filter
-                  _buildFilterField(
-                    label: 'Flow Title',
-                    controller: _flowTitleController,
-                    hintText: 'Enter flow title...',
-                    icon: Icons.label_outline_rounded,
-                  ),
+                  // Flow Title Filter (Checkboxes)
+                  _buildFlowTitleCheckboxes(),
                   const SizedBox(height: 12),
 
                   // Action Buttons
@@ -193,6 +197,79 @@ class _FilterPanelState extends State<FilterPanel> {
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: Color(0xFF3B82F6), width: 1.5),
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFlowTitleCheckboxes() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.label_outline_rounded, size: 14, color: Colors.grey.shade600),
+            const SizedBox(width: 6),
+            Text(
+              'Flow Title',
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.grey.shade700),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF9FAFB),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: const Color(0xFFE5E7EB)),
+          ),
+          child: Wrap(
+            spacing: 8,
+            runSpacing: 4,
+            children: _flowTitleOptions.map((option) {
+              final isSelected = _selectedFlowTitles.contains(option);
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    if (isSelected) {
+                      _selectedFlowTitles.remove(option);
+                    } else {
+                      _selectedFlowTitles.add(option);
+                    }
+                  });
+                },
+                borderRadius: BorderRadius.circular(6),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: isSelected ? const Color(0xFF3B82F6).withValues(alpha: 0.1) : Colors.white,
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: isSelected ? const Color(0xFF3B82F6) : const Color(0xFFE5E7EB), width: 1.5),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        isSelected ? Icons.check_box : Icons.check_box_outline_blank,
+                        size: 16,
+                        color: isSelected ? const Color(0xFF3B82F6) : Colors.grey.shade400,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        option,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                          color: isSelected ? const Color(0xFF3B82F6) : Colors.grey.shade700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
           ),
         ),
       ],

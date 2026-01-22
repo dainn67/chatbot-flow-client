@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ConversationItem extends StatelessWidget {
-  final String conversationId;
   final String appName;
+  final String flowTitle;
   final bool isSelected;
   final VoidCallback onTap;
 
-  const ConversationItem({super.key, required this.conversationId, required this.appName, required this.isSelected, required this.onTap});
+  const ConversationItem({super.key, required this.appName, required this.flowTitle, required this.isSelected, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +66,9 @@ class ConversationItem extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        conversationId.length > 20 ? '${conversationId.substring(0, 20)}...' : conversationId,
+                        flowTitle,
                         style: TextStyle(
-                          fontSize: 11,
+                          fontSize: 12,
                           color: isSelected ? const Color(0xFF3B82F6) : const Color(0xFF6B7280),
                           fontWeight: FontWeight.w400,
                         ),

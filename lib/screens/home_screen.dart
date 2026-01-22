@@ -101,8 +101,8 @@ class ConversationSidebar extends StatelessWidget {
           FilterPanel(
             appNameFilter: messagesProvider.appNameFilter,
             flowTitleFilter: messagesProvider.flowTitleFilter,
-            onFilterChanged: (appName, flowTitle) {
-              messagesProvider.setFilters(appName, flowTitle);
+            onFilterChanged: (appName, flowTitles) {
+              messagesProvider.setFilters(appName, flowTitles);
             },
           ),
 
@@ -118,11 +118,12 @@ class ConversationSidebar extends StatelessWidget {
                       final conversation = messagesProvider.conversations[index];
                       final conversationId = conversation.conversationId;
                       final appName = conversation.appName;
+                      final flowTitle = conversation.flowTitle;
                       final isSelected = messagesProvider.selectedConversationId == conversationId;
 
                       return ConversationItem(
-                        conversationId: conversationId,
                         appName: appName,
+                        flowTitle: flowTitle,
                         isSelected: isSelected,
                         onTap: () => messagesProvider.selectConversation(conversationId),
                       );
