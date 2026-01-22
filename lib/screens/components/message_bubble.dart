@@ -26,20 +26,9 @@ class MessageBubble extends StatelessWidget {
               margin: EdgeInsets.only(left: isUser ? 100 : 0, right: isUser ? 0 : 100),
               decoration: BoxDecoration(
                 gradient: isUser
-                    ? const LinearGradient(
-                        colors: [Color(0xFFD32F2F), Color(0xFFC62828), Color(0xFFB71C1C)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      )
-                    : const LinearGradient(
-                        colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1)],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
-                border: Border.all(
-                  color: isUser ? const Color(0xFFFFC107) : const Color(0xFFFFE082),
-                  width: 2.5,
-                ),
+                    ? const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828), Color(0xFFB71C1C)], begin: Alignment.topLeft, end: Alignment.bottomRight)
+                    : const LinearGradient(colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1)], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                border: Border.all(color: isUser ? const Color(0xFFFFC107) : const Color(0xFFFFE082), width: 2.5),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(isUser ? 20 : 6),
                   topRight: Radius.circular(isUser ? 6 : 20),
@@ -48,19 +37,12 @@ class MessageBubble extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: isUser
-                        ? const Color(0xFFD32F2F).withValues(alpha: 0.3)
-                        : const Color(0xFFFFC107).withValues(alpha: 0.2),
+                    color: isUser ? const Color(0xFFD32F2F).withValues(alpha: 0.3) : const Color(0xFFFFC107).withValues(alpha: 0.2),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                     spreadRadius: 1,
                   ),
-                  if (isUser)
-                    BoxShadow(
-                      color: const Color(0xFFFFC107).withValues(alpha: 0.2),
-                      blurRadius: 20,
-                      offset: const Offset(0, 6),
-                    ),
+                  if (isUser) BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.2), blurRadius: 20, offset: const Offset(0, 6)),
                 ],
               ),
               child: Column(
@@ -71,18 +53,11 @@ class MessageBubble extends StatelessWidget {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        '🎋',
-                        style: TextStyle(fontSize: 10),
-                      ),
+                      Text('🎋', style: TextStyle(fontSize: 10)),
                       const SizedBox(width: 6),
                       Text(
                         _formatTime(message.createdAt),
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: isUser ? Colors.white.withValues(alpha: 0.9) : const Color(0xFFD32F2F),
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: TextStyle(fontSize: 11, color: isUser ? Colors.white.withValues(alpha: 0.9) : const Color(0xFFD32F2F), fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -109,31 +84,16 @@ class MessageBubble extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: isUser ? const Color(0xFFFFC107) : const Color(0xFFD32F2F),
-          width: 2.5,
-        ),
+        border: Border.all(color: isUser ? const Color(0xFFFFC107) : const Color(0xFFD32F2F), width: 2.5),
         boxShadow: [
-          BoxShadow(
-            color: (isUser ? const Color(0xFFD32F2F) : const Color(0xFFFFC107)).withValues(alpha: 0.4),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-          BoxShadow(
-            color: (isUser ? const Color(0xFFFFC107) : const Color(0xFFD32F2F)).withValues(alpha: 0.2),
-            blurRadius: 16,
-            offset: const Offset(0, 5),
-          ),
+          BoxShadow(color: (isUser ? const Color(0xFFD32F2F) : const Color(0xFFFFC107)).withValues(alpha: 0.4), blurRadius: 10, offset: const Offset(0, 3)),
+          BoxShadow(color: (isUser ? const Color(0xFFFFC107) : const Color(0xFFD32F2F)).withValues(alpha: 0.2), blurRadius: 16, offset: const Offset(0, 5)),
         ],
       ),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Icon(
-            isUser ? Icons.person_rounded : Icons.smart_toy_rounded,
-            color: Colors.white,
-            size: 22,
-          ),
+          Icon(isUser ? Icons.person_rounded : Icons.smart_toy_rounded, color: Colors.white, size: 22),
           Positioned(
             top: 2,
             right: 2,
@@ -143,13 +103,7 @@ class MessageBubble extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isUser ? const Color(0xFFFFC107) : const Color(0xFFD32F2F),
                 shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: (isUser ? const Color(0xFFFFC107) : const Color(0xFFD32F2F)).withValues(alpha: 0.6),
-                    blurRadius: 4,
-                    spreadRadius: 1,
-                  ),
-                ],
+                boxShadow: [BoxShadow(color: (isUser ? const Color(0xFFFFC107) : const Color(0xFFD32F2F)).withValues(alpha: 0.6), blurRadius: 4, spreadRadius: 1)],
               ),
             ),
           ),
@@ -202,27 +156,17 @@ class MessageBubble extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextContentSimple(inputText: question ?? '', style: style),
+          Text(question ?? '', style: style),
           const SizedBox(height: 12),
           ...options.mapIndexed(
             (index, option) => Container(
               padding: const EdgeInsets.all(14),
               margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFFFF8E1), Color(0xFFFFE8CC)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                gradient: const LinearGradient(colors: [Color(0xFFFFF8E1), Color(0xFFFFE8CC)], begin: Alignment.topLeft, end: Alignment.bottomRight),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: const Color(0xFFD32F2F), width: 2),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFFFFC107).withValues(alpha: 0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
+                boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 3))],
               ),
               child: Row(
                 children: [
@@ -230,9 +174,7 @@ class MessageBubble extends StatelessWidget {
                     width: 28,
                     height: 28,
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFD32F2F), Color(0xFFC62828)],
-                      ),
+                      gradient: const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: const Color(0xFFFFC107), width: 2),
                     ),
@@ -253,20 +195,10 @@ class MessageBubble extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFF59D), Color(0xFFFFEE58)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFFFFF59D), Color(0xFFFFEE58)], begin: Alignment.topLeft, end: Alignment.bottomRight),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: const Color(0xFFD32F2F), width: 2),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFFFC107).withValues(alpha: 0.4),
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                ),
-              ],
+              boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.4), blurRadius: 10, offset: const Offset(0, 3))],
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -282,10 +214,7 @@ class MessageBubble extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: TextContentSimple(
-                    inputText: explanation ?? '',
-                    style: style.copyWith(color: const Color(0xFF5D4037)),
-                  ),
+                  child: Text(explanation ?? '', style: style.copyWith(color: const Color(0xFF5D4037))),
                 ),
               ],
             ),
@@ -304,7 +233,7 @@ class MessageBubble extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextContentSimple(inputText: text ?? '', style: style),
+        Text(text ?? '', style: style),
         if (suggestedPrompts.isNotEmpty) ...[const SizedBox(height: 12), _buildSuggestedPrompts(suggestedPrompts, style)],
         if (summary != null) ...[
           const SizedBox(height: 12),
@@ -312,39 +241,24 @@ class MessageBubble extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             margin: const EdgeInsets.symmetric(horizontal: 4),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFE8CC), Color(0xFFFFD7A8)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFFFFE8CC), Color(0xFFFFD7A8)], begin: Alignment.topLeft, end: Alignment.bottomRight),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: const Color(0xFFD32F2F), width: 2),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFFFC107).withValues(alpha: 0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
-                ),
-              ],
+              boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 3))],
             ),
             child: Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFD32F2F), Color(0xFFC62828)],
-                    ),
+                    gradient: const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: const Text('📝', style: TextStyle(fontSize: 14)),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: TextContentSimple(
-                    inputText: summary,
-                    style: style.copyWith(color: const Color(0xFF5D4037)),
-                  ),
+                  child: Text(summary, style: style.copyWith(color: const Color(0xFF5D4037))),
                 ),
               ],
             ),
@@ -362,33 +276,18 @@ class MessageBubble extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             margin: const EdgeInsets.symmetric(horizontal: 4),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFC107), Color(0xFFFFB300)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFFFFC107), Color(0xFFFFB300)], begin: Alignment.topLeft, end: Alignment.bottomRight),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: const Color(0xFFD32F2F), width: 2),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFFFC107).withValues(alpha: 0.3),
-                  blurRadius: 6,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+              boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.3), blurRadius: 6, offset: const Offset(0, 2))],
             ),
             child: Center(
-              child: TextContentSimple(
-                inputText: prompt,
+              child: Text(
+                prompt,
                 style: style.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
-                  shadows: [
-                    const Shadow(
-                      color: Color(0xFFD32F2F),
-                      blurRadius: 3,
-                    ),
-                  ],
+                  shadows: [const Shadow(color: Color(0xFFD32F2F), blurRadius: 3)],
                 ),
                 textAlign: TextAlign.center,
               ),

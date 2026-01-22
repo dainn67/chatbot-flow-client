@@ -82,6 +82,7 @@ class MessagesProvider with ChangeNotifier {
       _messages.addAll(messageDataList.map((msg) => Message.fromJson(msg)));
 
       loading = false;
+      selectConversation(_messages.first.conversationId);
       notifyListeners();
     } else {
       debugPrint('Error in getMessages: ${response.data}');
