@@ -143,7 +143,7 @@ class MessageBubble extends StatelessWidget {
     final style = TextStyle(fontSize: 14, height: 1.5, color: isUser ? Colors.white : const Color(0xFF5D4037), fontWeight: FontWeight.w500);
 
     // User message
-    if (isUser) return Text(text ?? '', style: style);
+    if (isUser) return SelectableText(text ?? '', style: style);
 
     // Question message
     if (isQuestion) {
@@ -155,7 +155,7 @@ class MessageBubble extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(question ?? '', style: style),
+          SelectableText(question ?? '', style: style),
           const SizedBox(height: 12),
           ...options.mapIndexed(
             (index, option) => Container(
@@ -185,7 +185,7 @@ class MessageBubble extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  Expanded(child: Text(option['text'] ?? '', style: style)),
+                  Expanded(child: SelectableText(option['text'] ?? '', style: style)),
                 ],
               ),
             ),
@@ -213,7 +213,7 @@ class MessageBubble extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Text(explanation ?? '', style: style.copyWith(color: const Color(0xFF5D4037))),
+                  child: SelectableText(explanation ?? '', style: style.copyWith(color: const Color(0xFF5D4037))),
                 ),
               ],
             ),
@@ -232,7 +232,7 @@ class MessageBubble extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(text ?? '', style: style),
+        SelectableText(text ?? '', style: style),
         if (suggestedPrompts.isNotEmpty) ...[const SizedBox(height: 12), _buildSuggestedPrompts(suggestedPrompts, style)],
         if (summary != null) ...[
           const SizedBox(height: 12),
@@ -257,7 +257,7 @@ class MessageBubble extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Text(summary, style: style.copyWith(color: const Color(0xFF5D4037))),
+                  child: SelectableText(summary, style: style.copyWith(color: const Color(0xFF5D4037))),
                 ),
               ],
             ),
@@ -281,7 +281,7 @@ class MessageBubble extends StatelessWidget {
               boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.3), blurRadius: 6, offset: const Offset(0, 2))],
             ),
             child: Center(
-              child: Text(
+              child: SelectableText(
                 prompt,
                 style: style.copyWith(
                   color: Colors.white,
