@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text(
-                  'Chatbotflow',
+                  'ABC Chatbot Flow',
                   style: TextStyle(
                     color: Color(0xFFB71C1C),
                     fontSize: 20,
@@ -440,24 +440,37 @@ class ChatArea extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectedConversationId = messagesProvider.selectedConversationId;
 
-    if (selectedConversationId == null) {
-      return _buildEmptyState();
-    }
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(
+            'https://storage.googleapis.com/micro-enigma-235001.appspot.com/cms_v2/images/new_year_background.jpg',
+          ),
+          fit: BoxFit.cover,
+          opacity: 0.3,
+        ),
+      ),
+      child: selectedConversationId == null
+          ? _buildEmptyState()
+          : Builder(
+              builder: (context) {
+                final messages = messagesProvider.getMessagesByConversationId(selectedConversationId);
 
-    final messages = messagesProvider.getMessagesByConversationId(selectedConversationId);
+                if (messages.isEmpty) {
+                  return _buildNoMessagesState();
+                }
 
-    if (messages.isEmpty) {
-      return _buildNoMessagesState();
-    }
-
-    return ListView.builder(
-      padding: const EdgeInsets.all(24),
-      reverse: false,
-      itemCount: messages.length,
-      itemBuilder: (context, index) {
-        final message = messages[index];
-        return MessageBubble(message: message);
-      },
+                return ListView.builder(
+                  padding: const EdgeInsets.all(24),
+                  reverse: false,
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    final message = messages[index];
+                    return MessageBubble(message: message);
+                  },
+                );
+              },
+            ),
     );
   }
 
