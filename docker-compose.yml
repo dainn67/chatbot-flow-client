@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  chatbot-flow-client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chatbot-flow-client
+    ports:
+      - "3006:80"
+    restart: unless-stopped
+    networks:
+      - chatbot-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  chatbot-network:
+    driver: bridge
+
