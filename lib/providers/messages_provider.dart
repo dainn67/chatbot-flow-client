@@ -64,6 +64,16 @@ class MessagesProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // Main functions
+  Future<Map<String, dynamic>> checkHealth() async {
+    final response = await _apiService.get('/api/messages/health');
+    if (response.statusCode == 200) {
+      return response.data as Map<String, dynamic>;
+    } else {
+      return {'status': 'failed', 'message': 'Health check failed: ${response.statusCode}: ${response.data}'};
+    }
+  }
+
   Future<void> getMessages() async {
     loading = true;
     notifyListeners();

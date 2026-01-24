@@ -4,6 +4,7 @@ import 'package:chatbotflowclient/screens/components/message_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/messages_provider.dart';
+import '../utils/toast_helper.dart';
 
 /// Màn hình chính của ứng dụng
 class HomeScreen extends StatefulWidget {
@@ -85,9 +86,30 @@ class _HomeScreenState extends State<HomeScreen> {
               boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.4), blurRadius: 8, offset: const Offset(0, 2))],
             ),
             child: IconButton(
+              icon: const Icon(Icons.network_check_rounded, color: Colors.white),
+              tooltip: 'Health Check',
+              onPressed: () {
+                context.read<MessagesProvider>().checkHealth().then((result) {
+                  ToastHelper.showSuccess(result.entries.map((e) => '${e.key}: ${e.value}').join('\n'));
+                });
+              },
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(colors: [Color(0xFFFFC107), Color(0xFFFFB300)]),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.4), blurRadius: 8, offset: const Offset(0, 2))],
+            ),
+            child: IconButton(
               icon: const Icon(Icons.refresh_rounded, color: Colors.white),
               tooltip: 'Refresh',
-              onPressed: () => context.read<MessagesProvider>().getMessages(),
+              onPressed: () {
+                context.read<MessagesProvider>().getMessages();
+                ToastHelper.showInfo('🔄 Đang tải lại dữ liệu...');
+              },
             ),
           ),
           const SizedBox(width: 8),
