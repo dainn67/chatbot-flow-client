@@ -77,15 +77,32 @@ class MessagesProvider with ChangeNotifier {
     final response = await _apiService.get('/api/messages/get-messages', queryParams: queryParams);
 
     if (response.statusCode == 200) {
-      final messageDataList = response.data as List<dynamic>;
-      _messages.clear();
-      _messages.addAll(messageDataList.map((msg) => Message.fromJson(msg)));
+      try {
+        final messageDataList = response.data as List<dynamic>;
 
-      loading = false;
-      selectConversation(_messages.first.conversationId);
-      notifyListeners();
+        // No messages
+        if (messageDataList.isEmpty) {
+          debugPrint('No messages found');
+          loading = false;
+          notifyListeners();
+          return;
+        }
+
+        // Clear and add messages
+        _messages.clear();
+        _messages.addAll(messageDataList.map((msg) => Message.fromJson(msg)));
+
+        // Update state
+        loading = false;
+        selectConversation(_messages.first.conversationId);
+        notifyListeners();
+      } catch (e) {
+        debugPrint('Error in getMessages: $e');
+        loading = false;
+        notifyListeners();
+      }
     } else {
-      debugPrint('Error in getMessages: ${response.data}');
+      debugPrint('Error getMessages status code: ${response.statusCode}: ${response.data}');
       loading = false;
       notifyListeners();
     }
