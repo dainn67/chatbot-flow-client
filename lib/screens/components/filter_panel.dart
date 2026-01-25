@@ -16,7 +16,7 @@ class _FilterPanelState extends State<FilterPanel> {
   late TextEditingController _appNameController;
 
   // Dummy flow title options
-  final List<String> _flowTitleOptions = ['theory', 'question'];
+  final List<String> _flowTitleOptions = ['theory', 'question', 'initially_analyze_progress'];
 
   final Set<String> _selectedFlowTitles = {};
 

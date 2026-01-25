@@ -46,6 +46,9 @@ dependencies:
   
   # Toast notification
   fluttertoast: ^8.2.8
+  
+  # Google Fonts
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
