@@ -33,11 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
         scrolledUnderElevation: 0,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1), Color(0xFFFFE8CC)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            gradient: LinearGradient(colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1), Color(0xFFFFE8CC)], begin: Alignment.topLeft, end: Alignment.bottomRight),
             border: Border(bottom: BorderSide(color: Color(0xFFFFC107), width: 3)),
           ),
         ),
@@ -47,11 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFD32F2F), Color(0xFFC62828), Color(0xFFB71C1C)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                gradient: const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828), Color(0xFFB71C1C)], begin: Alignment.topLeft, end: Alignment.bottomRight),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: const Color(0xFFFFC107), width: 2.5),
                 boxShadow: [
@@ -87,7 +79,38 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           Container(
-            margin: const EdgeInsets.only(right: 8),
+            margin: const EdgeInsets.only(right: 16),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(colors: [Color(0xFFFFC107), Color(0xFFFFB300)]),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.4), blurRadius: 8, offset: const Offset(0, 2))],
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.delete_forever_rounded, color: Colors.red),
+              tooltip: 'Delete All Messages',
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Delete All Messages'),
+                    content: const Text('Are you sure you want to delete all messages?'),
+                    actions: [
+                      TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          context.read<MessagesProvider>().deleteAllMessages();
+                        },
+                        child: const Text('Delete'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(right: 16),
             decoration: BoxDecoration(
               gradient: const LinearGradient(colors: [Color(0xFFFFC107), Color(0xFFFFB300)]),
               borderRadius: BorderRadius.circular(10),
@@ -103,9 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
-          const SizedBox(width: 8),
           Container(
-            margin: const EdgeInsets.only(right: 8),
+            margin: const EdgeInsets.only(right: 16),
             decoration: BoxDecoration(
               gradient: const LinearGradient(colors: [Color(0xFFFFC107), Color(0xFFFFB300)]),
               borderRadius: BorderRadius.circular(10),
@@ -117,7 +139,6 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () => context.read<MessagesProvider>().getMessages(),
             ),
           ),
-          const SizedBox(width: 8),
         ],
       ),
       body: Consumer<MessagesProvider>(
@@ -127,11 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               width: 3,
               decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0xFFD32F2F), Color(0xFFFFC107), Color(0xFFD32F2F)],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
+                gradient: LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFFFC107), Color(0xFFD32F2F)], begin: Alignment.topCenter, end: Alignment.bottomCenter),
               ),
             ),
             Expanded(child: ChatArea(messagesProvider: messagesProvider)),
@@ -153,11 +170,7 @@ class ConversationSidebar extends StatelessWidget {
     return Container(
       width: 280,
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFFFFFDE7), Color(0xFFFFF8E1), Color(0xFFFFECB3)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        gradient: LinearGradient(colors: [Color(0xFFFFFDE7), Color(0xFFFFF8E1), Color(0xFFFFECB3)], begin: Alignment.topCenter, end: Alignment.bottomCenter),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,9 +305,7 @@ class ConversationSidebar extends StatelessWidget {
               color: provider.currentPage > 1 ? null : const Color(0xFFFFE082),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: provider.currentPage > 1 ? const Color(0xFFFFC107) : const Color(0xFFFFD54F), width: 2),
-              boxShadow: provider.currentPage > 1
-                  ? [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))]
-                  : null,
+              boxShadow: provider.currentPage > 1 ? [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))] : null,
             ),
             child: IconButton(
               icon: const Icon(Icons.chevron_left_rounded, size: 20),
@@ -401,10 +412,7 @@ class ChatArea extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: Image.network(
-                      'https://storage.googleapis.com/micro-enigma-235001.appspot.com/cms_v2/images/new_year_loading.gif',
-                      fit: BoxFit.contain,
-                    ),
+                    child: Image.network('https://storage.googleapis.com/micro-enigma-235001.appspot.com/cms_v2/images/new_year_loading.gif', fit: BoxFit.contain),
                   ),
                   Text(
                     'Loading...',
@@ -427,11 +435,7 @@ class ChatArea extends StatelessWidget {
             width: 140,
             height: 140,
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFE082), Color(0xFFFFD54F), Color(0xFFFFC107)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFFFFE082), Color(0xFFFFD54F), Color(0xFFFFC107)], begin: Alignment.topLeft, end: Alignment.bottomRight),
               borderRadius: BorderRadius.circular(70),
               border: Border.all(color: const Color(0xFFD32F2F), width: 4),
               boxShadow: [

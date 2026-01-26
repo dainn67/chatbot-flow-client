@@ -158,4 +158,18 @@ class MessagesProvider with ChangeNotifier {
 
     return messages;
   }
+
+  Future<bool> deleteAllMessages() async {
+    _messages.clear();
+    _currentPage = 1;
+    _selectedConversationId = null;
+    _appNameFilter = null;
+    _flowTitleFilter = null;
+
+    final result = await _apiService.post('/api/messages/clear-all-messages');
+    if (result.statusCode != 200) return false;
+    notifyListeners();
+
+    return result.success;
+  }
 }
