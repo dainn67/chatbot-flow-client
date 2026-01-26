@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'providers/messages_provider.dart';
 import 'screens/home_screen.dart';
 
@@ -22,7 +23,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Provider Demo',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), useMaterial3: true),
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+          textTheme: GoogleFonts.poppinsTextTheme(),
+        ),
         home: const HomeScreen(),
       ),
     );

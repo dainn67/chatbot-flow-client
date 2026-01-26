@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Widget bộ lọc tối giản cho conversations
 class FilterPanel extends StatefulWidget {
   final String? appNameFilter;
   final List<String>? flowTitleFilter;
@@ -17,7 +16,7 @@ class _FilterPanelState extends State<FilterPanel> {
   late TextEditingController _appNameController;
 
   // Dummy flow title options
-  final List<String> _flowTitleOptions = ['theory', 'question'];
+  final List<String> _flowTitleOptions = ['theory', 'question', 'initially_analyze_progress'];
 
   final Set<String> _selectedFlowTitles = {};
 
@@ -59,10 +58,10 @@ class _FilterPanelState extends State<FilterPanel> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 8, offset: const Offset(0, 2))],
+        gradient: const LinearGradient(colors: [Color(0xFFFFFFFF), Color(0xFFFFF8E1)], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFD32F2F), width: 2.5),
+        boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4))],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -70,37 +69,57 @@ class _FilterPanelState extends State<FilterPanel> {
           // Header - luôn hiển thị
           InkWell(
             onTap: () => setState(() => _isExpanded = !_isExpanded),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(6),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: _hasActiveFilters ? const Color(0xFF3B82F6).withValues(alpha: 0.1) : const Color(0xFFF3F4F6),
-                      borderRadius: BorderRadius.circular(6),
+                      gradient: _hasActiveFilters ? const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]) : null,
+                      color: _hasActiveFilters ? null : const Color(0xFFFFE082),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: _hasActiveFilters ? const Color(0xFFFFC107) : const Color(0xFFD32F2F), width: 2),
                     ),
-                    child: Icon(Icons.filter_list_rounded, size: 16, color: _hasActiveFilters ? const Color(0xFF3B82F6) : const Color(0xFF6B7280)),
+                    child: Text('🎯', style: TextStyle(fontSize: 16)),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       'Filter',
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.grey.shade800),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        color: const Color(0xFFB71C1C),
+                        shadows: [Shadow(color: const Color(0xFFFFC107).withValues(alpha: 0.3), blurRadius: 4)],
+                      ),
                     ),
                   ),
                   if (_hasActiveFilters)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(color: const Color(0xFF3B82F6), borderRadius: BorderRadius.circular(10)),
-                      child: const Text(
-                        'Active',
-                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Colors.white),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(colors: [Color(0xFFFFC107), Color(0xFFFFB300)]),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFFD32F2F), width: 1.5),
                       ),
+                      child: const Text('✨', style: TextStyle(fontSize: 12)),
                     ),
-                  const SizedBox(width: 8),
-                  Icon(_isExpanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded, size: 20, color: Colors.grey.shade400),
+                  const SizedBox(width: 10),
+                  Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFE082),
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(color: const Color(0xFFD32F2F), width: 1.5),
+                    ),
+                    child: Icon(
+                      _isExpanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded,
+                      size: 18,
+                      color: const Color(0xFFD32F2F),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -108,9 +127,12 @@ class _FilterPanelState extends State<FilterPanel> {
 
           // Nội dung filter - hiển thị khi expand
           if (_isExpanded) ...[
-            const Divider(height: 1, color: Color(0xFFE5E7EB)),
+            Container(
+              height: 2,
+              decoration: const BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFFFC107), Color(0xFFD32F2F)])),
+            ),
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(14),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -120,7 +142,7 @@ class _FilterPanelState extends State<FilterPanel> {
 
                   // Flow Title Filter (Checkboxes)
                   _buildFlowTitleCheckboxes(),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
 
                   // Action Buttons
                   Row(
@@ -129,29 +151,38 @@ class _FilterPanelState extends State<FilterPanel> {
                         child: OutlinedButton(
                           onPressed: _clearFilter,
                           style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            side: const BorderSide(color: Color(0xFFE5E7EB)),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            side: const BorderSide(color: Color(0xFFD32F2F), width: 2),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           ),
                           child: const Text(
-                            'Clear',
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF6B7280)),
+                            'Clear Filter',
+                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFFD32F2F)),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 10),
                       Expanded(
-                        child: ElevatedButton(
-                          onPressed: _applyFilter,
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            backgroundColor: const Color(0xFF3B82F6),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: const Color(0xFFFFC107), width: 2),
+                            boxShadow: [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))],
                           ),
-                          child: const Text(
-                            'Apply',
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white),
+                          child: ElevatedButton(
+                            onPressed: _applyFilter,
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: const Text(
+                              'Áp dụng',
+                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
@@ -170,32 +201,41 @@ class _FilterPanelState extends State<FilterPanel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.grey.shade700),
+        Row(
+          children: [
+            Text('🏷️', style: TextStyle(fontSize: 14)),
+            const SizedBox(width: 6),
+            Text(
+              label,
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: const Color(0xFFB71C1C)),
+            ),
+          ],
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 8),
         TextField(
           controller: controller,
-          style: const TextStyle(fontSize: 13),
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF5D4037)),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(fontSize: 12, color: Colors.grey.shade400),
-            prefixIcon: Icon(icon, size: 16, color: Colors.grey.shade400),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            hintStyle: TextStyle(fontSize: 12, color: const Color(0xFFD32F2F).withValues(alpha: 0.4)),
+            prefixIcon: Container(
+              padding: const EdgeInsets.all(10),
+              child: Icon(icon, size: 18, color: const Color(0xFFD32F2F)),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             filled: true,
-            fillColor: const Color(0xFFF9FAFB),
+            fillColor: const Color(0xFFFFF8E1),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Color(0xFFFFE082), width: 2),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Color(0xFFFFE082), width: 2),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Color(0xFF3B82F6), width: 1.5),
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Color(0xFFD32F2F), width: 2.5),
             ),
           ),
         ),
@@ -209,25 +249,25 @@ class _FilterPanelState extends State<FilterPanel> {
       children: [
         Row(
           children: [
-            Icon(Icons.label_outline_rounded, size: 14, color: Colors.grey.shade600),
+            Text('🎭', style: TextStyle(fontSize: 14)),
             const SizedBox(width: 6),
             Text(
-              'Flow Title',
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.grey.shade700),
+              'Flow Type',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: const Color(0xFFB71C1C)),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 10),
         Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: const Color(0xFFF9FAFB),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: const Color(0xFFE5E7EB)),
+            gradient: const LinearGradient(colors: [Color(0xFFFFF8E1), Color(0xFFFFECB3)], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: const Color(0xFFFFE082), width: 2),
           ),
           child: Wrap(
-            spacing: 8,
-            runSpacing: 4,
+            spacing: 10,
+            runSpacing: 8,
             children: _flowTitleOptions.map((option) {
               final isSelected = _selectedFlowTitles.contains(option);
               return InkWell(
@@ -240,29 +280,37 @@ class _FilterPanelState extends State<FilterPanel> {
                     }
                   });
                 },
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(8),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
-                    color: isSelected ? const Color(0xFF3B82F6).withValues(alpha: 0.1) : Colors.white,
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(color: isSelected ? const Color(0xFF3B82F6) : const Color(0xFFE5E7EB), width: 1.5),
+                    gradient: isSelected ? const LinearGradient(colors: [Color(0xFFD32F2F), Color(0xFFC62828)]) : null,
+                    color: isSelected ? null : Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: isSelected ? const Color(0xFFFFC107) : const Color(0xFFD32F2F), width: 2),
+                    boxShadow: isSelected
+                        ? [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 6, offset: const Offset(0, 2))]
+                        : null,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        isSelected ? Icons.check_box : Icons.check_box_outline_blank,
-                        size: 16,
-                        color: isSelected ? const Color(0xFF3B82F6) : Colors.grey.shade400,
+                        isSelected ? Icons.check_circle : Icons.circle_outlined,
+                        size: 18,
+                        color: isSelected ? const Color(0xFFFFC107) : const Color(0xFFD32F2F),
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        option,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                          color: isSelected ? const Color(0xFF3B82F6) : Colors.grey.shade700,
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          option,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+                            color: isSelected ? Colors.white : const Color(0xFFD32F2F),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                       ),
                     ],

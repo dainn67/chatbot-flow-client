@@ -10,7 +10,11 @@ class ApiService {
   ApiService._internal();
 
   String? _bearerToken;
-  final Map<String, String> _defaultHeaders = {'Content-Type': 'application/json', 'Accept': 'application/json'};
+  final Map<String, String> _defaultHeaders = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
 
   void setBearerToken(String token) {
     _bearerToken = token;

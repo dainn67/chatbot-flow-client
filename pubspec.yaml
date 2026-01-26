@@ -43,6 +43,12 @@ dependencies:
   collection: ^1.19.1
   flutter_html: ^3.0.0
   flutter_math_fork: ^0.7.4
+  
+  # Toast notification
+  fluttertoast: ^8.2.8
+  
+  # Google Fonts
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
