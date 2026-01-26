@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
+import 'package:chatbotflowclient/configs/toast_message_config.dart';
 import 'package:http/http.dart' as http;
 import '../configs/api_config.dart';
 
@@ -49,27 +49,27 @@ class ApiService {
   }
 
   Future<ApiResponse> get(String endpoint, {Map<String, dynamic>? queryParams, Map<String, String>? headers}) async {
+    String errorMessage = '';
     try {
       final url = _buildUrl(endpoint, queryParams: queryParams);
       final response = await http.get(url, headers: _getHeaders(additionalHeaders: headers));
 
       return _handleResponse(response);
     } on SocketException catch (e) {
-      debugPrint('SocketException: $e');
-      return ApiResponse(statusCode: 500, data: 'Không có kết nối internet', success: false);
+      errorMessage = '${ToastMessageConfig.noInternetConnection}: $e';
     } on HttpException catch (e) {
-      debugPrint('HttpException: $e');
-      return ApiResponse(statusCode: 500, data: 'Không tìm thấy dữ liệu', success: false);
+      errorMessage = '${ToastMessageConfig.noDataFound}: $e';
     } on FormatException catch (e) {
-      debugPrint('FormatException: $e');
-      return ApiResponse(statusCode: 500, data: 'Định dạng dữ liệu không hợp lệ', success: false);
+      errorMessage = '${ToastMessageConfig.invalidDataFormat}: $e';
     } catch (e) {
-      debugPrint('Exception: $e');
-      return ApiResponse(statusCode: 500, data: 'Lỗi không xác định: $e', success: false);
+      errorMessage = '${ToastMessageConfig.unknownError}: $e';
     }
+
+    return ApiResponse(statusCode: 500, data: errorMessage, success: false);
   }
 
   Future<ApiResponse> post(String endpoint, {Map<String, dynamic>? body, Map<String, dynamic>? queryParams, Map<String, String>? headers}) async {
+    String errorMessage = '';
     try {
       final url = _buildUrl(endpoint, queryParams: queryParams);
       final response = await http.post(
@@ -79,18 +79,21 @@ class ApiService {
       );
 
       return _handleResponse(response);
-    } on SocketException {
-      throw ApiException('Không có kết nối internet');
-    } on HttpException {
-      throw ApiException('Không tìm thấy dữ liệu');
-    } on FormatException {
-      throw ApiException('Định dạng dữ liệu không hợp lệ');
+    } on SocketException catch (e) {
+      errorMessage = '${ToastMessageConfig.noInternetConnection}: $e';
+    } on HttpException catch (e) {
+      errorMessage = '${ToastMessageConfig.noDataFound}: $e';
+    } on FormatException catch (e) {
+      errorMessage = '${ToastMessageConfig.invalidDataFormat}: $e';
     } catch (e) {
-      throw ApiException('Lỗi không xác định: $e');
+      errorMessage = '${ToastMessageConfig.unknownError}: $e';
     }
+
+    return ApiResponse(statusCode: 500, data: errorMessage, success: false);
   }
 
   Future<ApiResponse> put(String endpoint, {Map<String, dynamic>? body, Map<String, dynamic>? queryParams, Map<String, String>? headers}) async {
+    String errorMessage = '';
     try {
       final url = _buildUrl(endpoint, queryParams: queryParams);
       final response = await http.put(
@@ -100,18 +103,21 @@ class ApiService {
       );
 
       return _handleResponse(response);
-    } on SocketException {
-      throw ApiException('Không có kết nối internet');
-    } on HttpException {
-      throw ApiException('Không tìm thấy dữ liệu');
-    } on FormatException {
-      throw ApiException('Định dạng dữ liệu không hợp lệ');
+    } on SocketException catch (e) {
+      errorMessage = '${ToastMessageConfig.noInternetConnection}: $e';
+    } on HttpException catch (e) {
+      errorMessage = '${ToastMessageConfig.noDataFound}: $e';
+    } on FormatException catch (e) {
+      errorMessage = '${ToastMessageConfig.invalidDataFormat}: $e';
     } catch (e) {
-      throw ApiException('Lỗi không xác định: $e');
+      errorMessage = '${ToastMessageConfig.unknownError}: $e';
     }
+
+    return ApiResponse(statusCode: 500, data: errorMessage, success: false);
   }
 
   Future<ApiResponse> patch(String endpoint, {Map<String, dynamic>? body, Map<String, dynamic>? queryParams, Map<String, String>? headers}) async {
+    String errorMessage = '';
     try {
       final url = _buildUrl(endpoint, queryParams: queryParams);
       final response = await http.patch(
@@ -121,18 +127,21 @@ class ApiService {
       );
 
       return _handleResponse(response);
-    } on SocketException {
-      throw ApiException('Không có kết nối internet');
-    } on HttpException {
-      throw ApiException('Không tìm thấy dữ liệu');
-    } on FormatException {
-      throw ApiException('Định dạng dữ liệu không hợp lệ');
+    } on SocketException catch (e) {
+      errorMessage = '${ToastMessageConfig.noInternetConnection}: $e';
+    } on HttpException catch (e) {
+      errorMessage = '${ToastMessageConfig.noDataFound}: $e';
+    } on FormatException catch (e) {
+      errorMessage = '${ToastMessageConfig.invalidDataFormat}: $e';
     } catch (e) {
-      throw ApiException('Lỗi không xác định: $e');
+      errorMessage = '${ToastMessageConfig.unknownError}: $e';
     }
+
+    return ApiResponse(statusCode: 500, data: errorMessage, success: false);
   }
 
   Future<ApiResponse> delete(String endpoint, {Map<String, dynamic>? body, Map<String, dynamic>? queryParams, Map<String, String>? headers}) async {
+    String errorMessage = '';
     try {
       final url = _buildUrl(endpoint, queryParams: queryParams);
       final response = await http.delete(
@@ -142,15 +151,17 @@ class ApiService {
       );
 
       return _handleResponse(response);
-    } on SocketException {
-      throw ApiException('Không có kết nối internet');
-    } on HttpException {
-      throw ApiException('Không tìm thấy dữ liệu');
-    } on FormatException {
-      throw ApiException('Định dạng dữ liệu không hợp lệ');
+    } on SocketException catch (e) {
+      errorMessage = '${ToastMessageConfig.noInternetConnection}: $e';
+    } on HttpException catch (e) {
+      errorMessage = '${ToastMessageConfig.noDataFound}: $e';
+    } on FormatException catch (e) {
+      errorMessage = '${ToastMessageConfig.invalidDataFormat}: $e';
     } catch (e) {
-      throw ApiException('Lỗi không xác định: $e');
+      errorMessage = '${ToastMessageConfig.unknownError}: $e';
     }
+
+    return ApiResponse(statusCode: 500, data: errorMessage, success: false);
   }
 
   ApiResponse _handleResponse(http.Response response) {
@@ -165,16 +176,21 @@ class ApiService {
 
     if (statusCode >= 200 && statusCode < 300) {
       return ApiResponse(statusCode: statusCode, data: data, success: true);
-    } else if (statusCode == 401) {
-      throw ApiException('Không có quyền truy cập. Vui lòng đăng nhập lại.');
-    } else if (statusCode == 403) {
-      throw ApiException('Không có quyền thực hiện hành động này.');
-    } else if (statusCode == 404) {
-      throw ApiException('Không tìm thấy dữ liệu.');
-    } else if (statusCode == 500) {
-      throw ApiException('Lỗi server. Vui lòng thử lại sau.');
     } else {
-      throw ApiException(data is Map && data.containsKey('message') ? data['message'] : 'Lỗi không xác định (Status: $statusCode)');
+      String errorMessage = '';
+      if (statusCode == 401) {
+        errorMessage = ToastMessageConfig.forbidden;
+      } else if (statusCode == 403) {
+        errorMessage = ToastMessageConfig.forbidden;
+      } else if (statusCode == 404) {
+        errorMessage = ToastMessageConfig.notFound;
+      } else if (statusCode == 500) {
+        errorMessage = ToastMessageConfig.internalServerError;
+      } else {
+        errorMessage = data is Map && data.containsKey('message') ? data['message'] : '${ToastMessageConfig.unknownError} (Status: $statusCode)';
+      }
+
+      return ApiResponse(statusCode: statusCode, data: errorMessage, success: false);
     }
   }
 }
