@@ -7,7 +7,7 @@ class Message {
   final String messageId;
   final String conversationId;
   final String createdAt;
-  int seen;
+  int? seen;
 
   Message({
     required this.id,
