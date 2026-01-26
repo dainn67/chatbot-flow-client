@@ -4,9 +4,17 @@ class ConversationItem extends StatelessWidget {
   final String appName;
   final String flowTitle;
   final bool isSelected;
+  final bool seen;
   final VoidCallback onTap;
 
-  const ConversationItem({super.key, required this.appName, required this.flowTitle, required this.isSelected, required this.onTap});
+  const ConversationItem({
+    super.key,
+    required this.appName,
+    required this.flowTitle,
+    required this.isSelected,
+    required this.seen,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,23 +38,11 @@ class ConversationItem extends StatelessWidget {
                   : null,
               color: isSelected ? null : Colors.transparent,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: isSelected ? const Color(0xFFD32F2F).withValues(alpha: 0.4) : Colors.transparent,
-                width: 2,
-              ),
+              border: Border.all(color: isSelected ? const Color(0xFFD32F2F).withValues(alpha: 0.4) : Colors.transparent, width: 2),
               boxShadow: isSelected
                   ? [
-                      BoxShadow(
-                        color: const Color(0xFFD32F2F).withValues(alpha: 0.2),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                        spreadRadius: 1,
-                      ),
-                      BoxShadow(
-                        color: const Color(0xFFFFC107).withValues(alpha: 0.1),
-                        blurRadius: 20,
-                        offset: const Offset(0, 6),
-                      ),
+                      BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.2), blurRadius: 12, offset: const Offset(0, 4), spreadRadius: 1),
+                      BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.1), blurRadius: 20, offset: const Offset(0, 6)),
                     ]
                   : null,
             ),
@@ -65,28 +61,15 @@ class ConversationItem extends StatelessWidget {
                         : null,
                     color: isSelected ? null : const Color(0xFFFFF8E1),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: isSelected ? const Color(0xFFFFC107).withValues(alpha: 0.6) : const Color(0xFFFFE082),
-                      width: 2,
-                    ),
+                    border: Border.all(color: isSelected ? const Color(0xFFFFC107).withValues(alpha: 0.6) : const Color(0xFFFFE082), width: 2),
                     boxShadow: isSelected
-                        ? [
-                            BoxShadow(
-                              color: const Color(0xFFD32F2F).withValues(alpha: 0.4),
-                              blurRadius: 8,
-                              offset: const Offset(0, 3),
-                            ),
-                          ]
+                        ? [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.4), blurRadius: 8, offset: const Offset(0, 3))]
                         : null,
                   ),
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Icon(
-                        Icons.chat_rounded,
-                        size: 22,
-                        color: isSelected ? Colors.white : const Color(0xFFFFA726),
-                      ),
+                      Icon(Icons.chat_rounded, size: 22, color: isSelected ? Colors.white : const Color(0xFFFFA726)),
                       if (isSelected)
                         Positioned(
                           top: 4,
@@ -97,13 +80,7 @@ class ConversationItem extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: const Color(0xFFFFC107),
                               shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFFFFC107).withValues(alpha: 0.6),
-                                  blurRadius: 6,
-                                  spreadRadius: 1,
-                                ),
-                              ],
+                              boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.6), blurRadius: 6, spreadRadius: 1)],
                             ),
                           ),
                         ),
@@ -125,14 +102,7 @@ class ConversationItem extends StatelessWidget {
                                 fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                                 color: isSelected ? const Color(0xFFB71C1C) : const Color(0xFF5D4037),
                                 letterSpacing: 0,
-                                shadows: isSelected
-                                    ? [
-                                        Shadow(
-                                          color: const Color(0xFFFFC107).withValues(alpha: 0.3),
-                                          blurRadius: 4,
-                                        ),
-                                      ]
-                                    : null,
+                                shadows: isSelected ? [Shadow(color: const Color(0xFFFFC107).withValues(alpha: 0.3), blurRadius: 4)] : null,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -143,21 +113,11 @@ class ConversationItem extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [Color(0xFFFFC107), Color(0xFFFFB300)],
-                                ),
+                                gradient: const LinearGradient(colors: [Color(0xFFFFC107), Color(0xFFFFB300)]),
                                 borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0xFFFFC107).withValues(alpha: 0.4),
-                                    blurRadius: 4,
-                                  ),
-                                ],
+                                boxShadow: [BoxShadow(color: const Color(0xFFFFC107).withValues(alpha: 0.4), blurRadius: 4)],
                               ),
-                              child: Text(
-                                '✨',
-                                style: TextStyle(fontSize: 10),
-                              ),
+                              child: Text('✨', style: TextStyle(fontSize: 10)),
                             ),
                           ],
                         ],
@@ -176,6 +136,12 @@ class ConversationItem extends StatelessWidget {
                     ],
                   ),
                 ),
+                if (!seen)
+                  Container(
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                  ),
               ],
             ),
           ),

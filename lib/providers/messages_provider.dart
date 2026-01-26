@@ -22,13 +22,17 @@ class MessagesProvider with ChangeNotifier {
   int itemsPerPage = 100;
 
   List<Conversation> get conversations {
-    final seen = <String>{};
+    final seenConversations = <String>{};
     final uniqueConversations = <Conversation>[];
 
     for (final msg in _messages) {
-      if (!seen.contains(msg.conversationId)) {
-        seen.add(msg.conversationId);
-        uniqueConversations.add(Conversation(conversationId: msg.conversationId, appName: msg.appName, flowTitle: msg.flowTitle));
+      if (!seenConversations.contains(msg.conversationId)) {
+        seenConversations.add(msg.conversationId);
+
+        // Check if any message in this conversation has seen == 1
+        bool anySeen = _messages.any((m) => m.conversationId == msg.conversationId && m.seen == 1);
+
+        uniqueConversations.add(Conversation(conversationId: msg.conversationId, appName: msg.appName, flowTitle: msg.flowTitle, seen: anySeen));
       }
     }
     return uniqueConversations;
@@ -60,8 +64,22 @@ class MessagesProvider with ChangeNotifier {
   }
 
   void selectConversation(String conversationId) {
-    _selectedConversationId = conversationId;
-    notifyListeners();
+    if (_selectedConversationId != conversationId) {
+      _selectedConversationId = conversationId;
+      notifyListeners();
+
+      final messages = getMessagesByConversationId(conversationId);
+      if (messages.any((msg) => msg.seen == 1)) return;
+
+      // Update local seen status
+      messages.firstOrNull?.seen = 1;
+      notifyListeners();
+
+      // Update server seen status
+      _apiService.post('/api/messages/mark-as-seen', body: {'conversation_id': conversationId}).then((result) {
+        if (result.statusCode != 200) debugPrint('Error mark as seen: ${result.statusCode}: ${result.data}');
+      });
+    }
   }
 
   // Main functions
@@ -75,6 +93,8 @@ class MessagesProvider with ChangeNotifier {
   }
 
   Future<void> getMessages() async {
+    if (loading) return; // Prevent multiple simultaneous calls
+
     loading = true;
     notifyListeners();
 
@@ -90,10 +110,13 @@ class MessagesProvider with ChangeNotifier {
       try {
         final messageDataList = response.data as List<dynamic>;
 
+        _selectedConversationId = null;
+
         // No messages
         if (messageDataList.isEmpty) {
           debugPrint('No messages found');
           loading = false;
+
           notifyListeners();
           return;
         }
@@ -104,7 +127,6 @@ class MessagesProvider with ChangeNotifier {
 
         // Update state
         loading = false;
-        selectConversation(_messages.first.conversationId);
         notifyListeners();
       } catch (e) {
         debugPrint('Error in getMessages: $e');

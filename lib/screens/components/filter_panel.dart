@@ -114,7 +114,11 @@ class _FilterPanelState extends State<FilterPanel> {
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(color: const Color(0xFFD32F2F), width: 1.5),
                     ),
-                    child: Icon(_isExpanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded, size: 18, color: const Color(0xFFD32F2F)),
+                    child: Icon(
+                      _isExpanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded,
+                      size: 18,
+                      color: const Color(0xFFD32F2F),
+                    ),
                   ),
                 ],
               ),
@@ -284,16 +288,30 @@ class _FilterPanelState extends State<FilterPanel> {
                     color: isSelected ? null : Colors.white,
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: isSelected ? const Color(0xFFFFC107) : const Color(0xFFD32F2F), width: 2),
-                    boxShadow: isSelected ? [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 6, offset: const Offset(0, 2))] : null,
+                    boxShadow: isSelected
+                        ? [BoxShadow(color: const Color(0xFFD32F2F).withValues(alpha: 0.3), blurRadius: 6, offset: const Offset(0, 2))]
+                        : null,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(isSelected ? Icons.check_circle : Icons.circle_outlined, size: 18, color: isSelected ? const Color(0xFFFFC107) : const Color(0xFFD32F2F)),
+                      Icon(
+                        isSelected ? Icons.check_circle : Icons.circle_outlined,
+                        size: 18,
+                        color: isSelected ? const Color(0xFFFFC107) : const Color(0xFFD32F2F),
+                      ),
                       const SizedBox(width: 6),
-                      Text(
-                        option,
-                        style: TextStyle(fontSize: 12, fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600, color: isSelected ? Colors.white : const Color(0xFFD32F2F)),
+                      Expanded(
+                        child: Text(
+                          option,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+                            color: isSelected ? Colors.white : const Color(0xFFD32F2F),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ),
                     ],
                   ),

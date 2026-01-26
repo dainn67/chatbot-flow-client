@@ -7,6 +7,7 @@ class Message {
   final String messageId;
   final String conversationId;
   final String createdAt;
+  int seen;
 
   Message({
     required this.id,
@@ -17,6 +18,7 @@ class Message {
     required this.role,
     required this.appName,
     required this.flowTitle,
+    required this.seen,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class Message {
       conversationId: json['conversation_id'],
       createdAt: json['created_at'],
       flowTitle: json['flow_title'],
+      seen: json['seen'],
     );
   }
 
@@ -42,6 +45,7 @@ class Message {
       'role': role,
       'app_name': appName,
       'flow_title': flowTitle,
+      'seen': seen,
     };
   }
 }
