@@ -20,9 +20,10 @@ class MessagesProvider with ChangeNotifier {
   List<String>? get flowTitleFilter => _flowTitleFilter;
 
   // Pagination
+  final int itemsPerPage = 100;
+  final int limitPerRequest = 500;
   int _currentPage = 1;
   int get currentPage => _currentPage;
-  int itemsPerPage = 100;
 
   List<Conversation> get conversations {
     final seenConversations = <String>{};
@@ -133,7 +134,7 @@ class MessagesProvider with ChangeNotifier {
       if (_appNameFilter != null) 'app_name': _appNameFilter,
       if (_flowTitleFilter != null) 'flow_titles': _flowTitleFilter!.join(','),
       'skip': (_currentPage - 1) * itemsPerPage,
-      'limit': 300,
+      'limit': limitPerRequest,
     };
 
     final response = await _apiService.get('/api/messages/get-messages', queryParams: queryParams);
