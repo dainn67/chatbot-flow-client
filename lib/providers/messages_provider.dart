@@ -6,7 +6,10 @@ import 'package:flutter/foundation.dart';
 class MessagesProvider with ChangeNotifier {
   final ApiService _apiService = ApiService();
 
-  // Messages
+  // All messages from server (full dataset)
+  final List<Message> _allMessages = [];
+
+  // Filtered and paginated messages for display
   final List<Message> _messages = [];
   List<Message> get messages => _messages;
 
@@ -45,22 +48,49 @@ class MessagesProvider with ChangeNotifier {
   bool loading = false;
 
   // Set filters
-  void setFilters(String? appName, List<String>? flowTitles) async {
+  void setFilters(String? appName, List<String>? flowTitles) {
     _appNameFilter = appName;
     _flowTitleFilter = flowTitles;
     _currentPage = 1;
 
-    getMessages();
+    _applyFiltersAndPagination();
   }
 
   void nextPage() {
     _currentPage++;
-    getMessages();
+    _applyFiltersAndPagination();
   }
 
   void previousPage() {
     _currentPage--;
-    getMessages();
+    _applyFiltersAndPagination();
+  }
+
+  // Apply filters and pagination to local messages
+  void _applyFiltersAndPagination() {
+    // Start with all messages
+    List<Message> filtered = List.from(_allMessages);
+
+    // Apply app name filter
+    if (_appNameFilter != null && _appNameFilter!.isNotEmpty) {
+      filtered = filtered.where((msg) => msg.appName == _appNameFilter).toList();
+    }
+
+    // Apply flow title filter
+    if (_flowTitleFilter != null && _flowTitleFilter!.isNotEmpty) {
+      filtered = filtered.where((msg) => _flowTitleFilter!.contains(msg.flowTitle)).toList();
+    }
+
+    // Apply pagination
+    final startIndex = (_currentPage - 1) * itemsPerPage;
+    final endIndex = startIndex + itemsPerPage;
+
+    _messages.clear();
+    if (startIndex < filtered.length) {
+      _messages.addAll(filtered.sublist(startIndex, endIndex > filtered.length ? filtered.length : endIndex));
+    }
+
+    notifyListeners();
   }
 
   void selectConversation(String conversationId) {
@@ -92,8 +122,9 @@ class MessagesProvider with ChangeNotifier {
     }
   }
 
+  // Load all messages from server (call only initially or on reload)
   Future<void> getMessages() async {
-    if (loading) return; // Prevent multiple simultaneous calls
+    if (loading) return;
 
     loading = true;
     notifyListeners();
@@ -102,6 +133,7 @@ class MessagesProvider with ChangeNotifier {
       if (_appNameFilter != null) 'app_name': _appNameFilter,
       if (_flowTitleFilter != null) 'flow_titles': _flowTitleFilter!.join(','),
       'skip': (_currentPage - 1) * itemsPerPage,
+      'limit': 300,
     };
 
     final response = await _apiService.get('/api/messages/get-messages', queryParams: queryParams);
@@ -112,18 +144,23 @@ class MessagesProvider with ChangeNotifier {
 
         _selectedConversationId = null;
 
+        // Clear all messages
+        _allMessages.clear();
+        _messages.clear();
+
         // No messages
         if (messageDataList.isEmpty) {
           debugPrint('No messages found');
           loading = false;
-
           notifyListeners();
           return;
         }
 
-        // Clear and add messages
-        _messages.clear();
-        _messages.addAll(messageDataList.map((msg) => Message.fromJson(msg)));
+        // Store all messages to local list
+        _allMessages.addAll(messageDataList.map((msg) => Message.fromJson(msg)));
+
+        // Apply filters and pagination to display
+        _applyFiltersAndPagination();
 
         // Update state
         loading = false;
@@ -141,7 +178,8 @@ class MessagesProvider with ChangeNotifier {
   }
 
   List<Message> getMessagesByConversationId(String conversationId) {
-    final messages = _messages.where((msg) => msg.conversationId == conversationId).toList();
+    // Get messages from all messages, not just current page
+    final messages = _allMessages.where((msg) => msg.conversationId == conversationId).toList();
 
     messages.sort((a, b) {
       final dateA = DateTime.tryParse(a.createdAt) ?? DateTime.fromMillisecondsSinceEpoch(0);
