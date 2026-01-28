@@ -1,3 +1,4 @@
+import 'package:chatbotflowclient/configs/api_config.dart';
 import 'package:chatbotflowclient/models/conversation.dart';
 import 'package:chatbotflowclient/models/message.dart';
 import 'package:chatbotflowclient/services/api_service.dart';
@@ -107,7 +108,7 @@ class MessagesProvider with ChangeNotifier {
       notifyListeners();
 
       // Update server seen status
-      _apiService.post('/api/messages/mark-as-seen', body: {'conversation_id': conversationId}).then((result) {
+      _apiService.post(ApiConfig.markAsSeenEndpoint, body: {'conversation_id': conversationId}).then((result) {
         if (result.statusCode != 200) debugPrint('Error mark as seen: ${result.statusCode}: ${result.data}');
       });
     }
@@ -115,7 +116,7 @@ class MessagesProvider with ChangeNotifier {
 
   // Main functions
   Future<Map<String, dynamic>> checkHealth() async {
-    final response = await _apiService.get('/api/messages/health');
+    final response = await _apiService.get(ApiConfig.healthEndpoint);
     if (response.statusCode == 200) {
       return response.data as Map<String, dynamic>;
     } else {
@@ -137,7 +138,7 @@ class MessagesProvider with ChangeNotifier {
       'limit': limitPerRequest,
     };
 
-    final response = await _apiService.get('/api/messages/get-messages', queryParams: queryParams);
+    final response = await _apiService.get(ApiConfig.getMessagesEndpoint, queryParams: queryParams);
 
     if (response.statusCode == 200) {
       try {
